@@ -3,4 +3,4 @@ project(361_Project)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(361_Project main.cpp)
+add_executable(361_Project main.cpp job.cpp job.hpp)
