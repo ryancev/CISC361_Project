@@ -1,22 +1,26 @@
 #include <iostream>
-#include <stdlib.h>
 #include <fstream>
 #include <sstream>
-#include "job.hpp"
+#include "Job.hpp"
+#include "HoldQueueTwo.hpp"
 #include <string>
 
 
 int countSpaces(const std::string& currentLine);
-void processLine(std::string currentLine);
+void processLine(const std::string& currentLine);
+
+HoldQueueTwo *holdQueueTwo = new HoldQueueTwo();
 
 int main() {
     // C = System Configuration
+    //    C __ = The system to be simulated starts at time __
     //    M = Main memory with __ memory
     //    S = Serial Devices with __ devices
     //    Q = Time quantum
+    //
     // A = Job Arrival
-    //    J = Job number
     //    A __ = Arrives at time __
+    //    J =    Job number
     //    M __ = Units of main memory required
     //    S __ = Max devices at any point during execution
     //    P __ = Priority number
@@ -42,6 +46,7 @@ int main() {
         std::cout << currentLine << std::endl;
         processLine(currentLine);
     }
+    holdQueueTwo->printHoldQueue();
     return 0;
 }
 
@@ -64,7 +69,7 @@ int countSpaces(const std::string& currentLine) {
  * Processes a line of input to determine which job constructor should be called.
  * @param currentLine
  */
-void processLine(std::string currentLine) {
+void processLine(const std::string& currentLine) {
     int numSpaces = countSpaces(currentLine);
     std::string splitString[numSpaces + 1];
     std::stringstream ssin(currentLine);
@@ -77,6 +82,9 @@ void processLine(std::string currentLine) {
         ssin >> splitString[wordIndex];
         ++wordIndex;
     }
+    // This is just to make sure that the linked list was working correctly - will get removed
+    Job *job = new Job(splitString->at(0));
+    holdQueueTwo->insertAtFront(new QueueNode(job));
     // Checking the command code of the input
     switch (splitString->at(0)) {
         case 'C': {
