@@ -8,10 +8,10 @@
 /**
  * Object to represent a job
  */
-class job {
-    char commandCode;
+class Job {
 public:
-    job(char commandCode);
+    char commandCode;
+    Job(char commandCode);
 };
 
 
