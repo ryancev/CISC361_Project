@@ -5,7 +5,6 @@
 #include "QueueNode.hpp"
 
 QueueNode::QueueNode(Job *j) {
-    job = nullptr;
     next = nullptr;
     job = j;
 }
