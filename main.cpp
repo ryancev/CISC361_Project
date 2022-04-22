@@ -82,9 +82,6 @@ void processLine(const std::string& currentLine) {
         ssin >> splitString[wordIndex];
         ++wordIndex;
     }
-    // This is just to make sure that the linked list was working correctly - will get removed
-    Job *job = new Job(splitString->at(0));
-    holdQueueTwo->insertAtFront(new QueueNode(job));
     // Checking the command code of the input
     switch (splitString->at(0)) {
         case 'C': {
