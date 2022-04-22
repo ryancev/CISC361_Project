@@ -38,4 +38,5 @@ void HoldQueueTwo::printHoldQueue() {
         std::cout << iterationNode->job->commandCode << " ";
         iterationNode = iterationNode->next;
     }
+    std::cout << std::endl;
 }
