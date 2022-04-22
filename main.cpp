@@ -85,23 +85,23 @@ void processLine(const std::string& currentLine) {
     // Checking the command code of the input
     switch (splitString->at(0)) {
         case 'C': {
-            // Call constructor for C commands
+            // Set proper system configuration variables
             break;
         }
         case 'A': {
-            // Call constructor for A commands
+            // Call constructor Job
             break;
         }
         case 'Q': {
-            // Call constructor for Q commands
+            // Process device request
             break;
         }
         case 'L': {
-            // Call constructor for L commands
+            // Process device release request
             break;
         }
         case 'D': {
-            // Call constructor for D commands
+            // Process system info display
             break;
         }
     }
