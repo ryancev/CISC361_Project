@@ -9,9 +9,19 @@
  * Object to represent a job
  */
 class Job {
+    // A = Job Arrival
+    //    A __ = Arrives at time __
+    //    J =    Job number
+    //    M __ = Units of main memory required
+    //    S __ = Max devices at any point during execution
+    //    P __ = Priority number
 public:
-    char commandCode;
-    Job(char commandCode);
+    int arrivalTime;
+    int jobNumber;
+    int memoryNeeded;
+    int maxDevices;
+    int priorityNumber;
+    Job(int arrivalTime, int jobNumber, int memoryNeeded, int maxDevices, int priorityNumber);
 };
 
 

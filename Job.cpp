@@ -4,8 +4,10 @@
 
 #include "Job.hpp"
 
-
-
-Job::Job(char commandCode) {
-    Job::commandCode = commandCode;
+Job::Job(int arrivalTime, int jobNumber, int memoryNeeded, int maxDevices, int priorityNumber) {
+    Job::arrivalTime = arrivalTime;
+    Job::jobNumber = jobNumber;
+    Job::memoryNeeded = memoryNeeded;
+    Job::maxDevices = maxDevices;
+    Job::priorityNumber = priorityNumber;
 }
