@@ -14,14 +14,17 @@ class Job {
     //    J =    Job number
     //    M __ = Units of main memory required
     //    S __ = Max devices at any point during execution
+    //    R = Running time
     //    P __ = Priority number
 public:
     int arrivalTime;
     int jobNumber;
     int memoryNeeded;
     int maxDevices;
+    int runningTime;
     int priorityNumber;
-    Job(int arrivalTime, int jobNumber, int memoryNeeded, int maxDevices, int priorityNumber);
+
+    Job(int arrivalTime, int jobNumber, int memoryNeeded, int maxDevices, int runningTime, int priorityNumber);
 };
 
 
