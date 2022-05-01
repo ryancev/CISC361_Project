@@ -35,6 +35,7 @@ void HoldQueueTwo::insertAtFront(QueueNode *nodeToInsert) {
 void HoldQueueTwo::printHoldQueue() {
     QueueNode *iterationNode = head;
     while (iterationNode != nullptr) {
+        std::cout << iterationNode->job->jobNumber << " ";
         iterationNode = iterationNode->next;
     }
     std::cout << std::endl;
