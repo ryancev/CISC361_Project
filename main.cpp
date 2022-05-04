@@ -72,7 +72,8 @@ void processLine(const std::string& currentLine) {
     //  2  J =    Job number
     //  3  M __ = Units of main memory required
     //  4  S __ = Max devices at any point during execution
-    //  5  P __ = Priority number
+    //  5  R __ = Run Time
+    //  6  P __ = Priority number
     // Q = Request for devices (I/O)
     //  1  Q __ = At time __
     //  2  J __ = Job number
@@ -101,14 +102,23 @@ void processLine(const std::string& currentLine) {
         }
         case 'A': {
             // Call constructor Job
+            int jobNumber = std::stoi(splitString[2]);
+            int memoryRequired = std::stoi(splitString[3]);
+            int maxDevices = std::stoi(splitString[4]);
+            int runTime = std::stoi(splitString[5]);
+            int priorityNumber = std::stoi(splitString[6]);
             break;
         }
         case 'Q': {
             // Process device request
+            int jobNumber = std::stoi(splitString[2]);
+            int devicesRequested = std::stoi(splitString[3]);
             break;
         }
         case 'L': {
             // Process device release request
+            int jobNumber = std::stoi(splitString[2]);
+            int devicesReleased = std::stoi(splitString[3]);
             break;
         }
         case 'D': {
