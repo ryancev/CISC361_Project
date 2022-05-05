@@ -6,7 +6,7 @@
 #define INC_361_PROJECT_CPU_HPP
 
 
-#include "HoldQueueTwo.hpp"
+#include "Job.hpp"
 
 class CPU {
     /** Max allocatable memory for this system */
@@ -19,8 +19,8 @@ class CPU {
     int memoryUsed;
     /** Current number of devices being used */
     int devicesUsed;
-    /** Second hold queue, FIFO */
-    HoldQueueTwo *holdQueueTwo;
+    /** The job that is currently running on the CPU */
+    Job *currentJob;
 public:
     CPU(int mainMemory, int serialDevices, int timeQuantum);
 };
