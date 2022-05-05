@@ -10,5 +10,5 @@ CPU::CPU(int mainMemory, int serialDevices, int timeQuantum) {
     TIME_QUANTUM = timeQuantum;
     memoryUsed = 0;
     devicesUsed = 0;
-    holdQueueTwo = new HoldQueueTwo();
+    currentJob = nullptr;
 }

@@ -10,7 +10,10 @@
 int countSpaces(const std::string& currentLine);
 void processLine(const std::string& currentLine);
 
+/** Current system configuration **/
 CPU *currentSystem;
+/** Second hold queue, FIFO **/
+HoldQueueTwo *holdQueueTwo;
 
 int main() {
     std::string currentLine;
