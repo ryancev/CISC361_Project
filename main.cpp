@@ -112,6 +112,8 @@ void processLine(const std::string& currentLine) {
             int maxDevices = std::stoi(splitString[4]);
             int runTime = std::stoi(splitString[5]);
             int priorityNumber = std::stoi(splitString[6]);
+
+            Job *newJob = new Job(arrivalTime, jobNumber, memoryRequired, maxDevices, runTime, priorityNumber);
             break;
         }
         case 'Q': {
