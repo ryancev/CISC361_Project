@@ -12,3 +12,7 @@ CPU::CPU(int mainMemory, int serialDevices, int timeQuantum) {
     devicesUsed = 0;
     currentJob = nullptr;
 }
+
+void CPU::updateCurrentJob(Job *newJob) {
+    currentJob = newJob ;
+}

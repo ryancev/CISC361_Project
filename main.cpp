@@ -97,6 +97,7 @@ void processLine(const std::string& currentLine) {
     switch (splitString->at(0)) {
         case 'C': {
             // Set proper system configuration variables
+            int arrivalTime = std::stoi(splitString[1]);
             int mainMemory = std::stoi(splitString[2]);
             int serialDevices = std::stoi(splitString[3]);
             int timeQuantum = std::stoi(splitString[4]);
@@ -105,6 +106,7 @@ void processLine(const std::string& currentLine) {
         }
         case 'A': {
             // Call constructor Job
+            int arrivalTime = std::stoi(splitString[1]);
             int jobNumber = std::stoi(splitString[2]);
             int memoryRequired = std::stoi(splitString[3]);
             int maxDevices = std::stoi(splitString[4]);
@@ -114,12 +116,14 @@ void processLine(const std::string& currentLine) {
         }
         case 'Q': {
             // Process device request
+            int arrivalTime = std::stoi(splitString[1]);
             int jobNumber = std::stoi(splitString[2]);
             int devicesRequested = std::stoi(splitString[3]);
             break;
         }
         case 'L': {
             // Process device release request
+            int arrivalTime = std::stoi(splitString[1]);
             int jobNumber = std::stoi(splitString[2]);
             int devicesReleased = std::stoi(splitString[3]);
             break;
