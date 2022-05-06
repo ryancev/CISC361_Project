@@ -24,8 +24,8 @@ void HoldQueueTwo::insertAtFront(QueueNode *nodeToInsert) {
         tail = nodeToInsert;
     }
     else {
-        nodeToInsert->next = head;
-        head = nodeToInsert;
+        tail->next = nodeToInsert;
+        tail = nodeToInsert;
     }
 }
 
