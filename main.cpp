@@ -6,9 +6,10 @@
 #include "CPU.hpp"
 #include <string>
 
+using namespace std;
 
-int countSpaces(const std::string& currentLine);
-void processLine(const std::string& currentLine);
+int countSpaces(const string& currentLine);
+void processLine(const string& currentLine);
 
 /** Current system configuration **/
 CPU *currentSystem;
@@ -16,10 +17,10 @@ CPU *currentSystem;
 HoldQueueTwo *holdQueueTwo;
 
 int main() {
-    std::string currentLine;
-    std::ifstream inputFile("../test_input.txt");
-    while (std::getline(inputFile, currentLine)) {
-        std::cout << currentLine << std::endl;
+    string currentLine;
+    ifstream inputFile("../test_input.txt");
+    while (getline(inputFile, currentLine)) {
+        cout << currentLine << endl;
         processLine(currentLine);
     }
     return 0;
@@ -30,7 +31,7 @@ int main() {
  * @param currentLine The string that will have its spaces counted
  * @return int representing the number of spaces
  */
-int countSpaces(const std::string& currentLine) {
+int countSpaces(const string& currentLine) {
     int numSpaces = 0;
     for (char i : currentLine) {
         if (i == ' ')  {
@@ -44,10 +45,10 @@ int countSpaces(const std::string& currentLine) {
  * Processes a line of input to determine which job constructor should be called.
  * @param currentLine
  */
-void processLine(const std::string& currentLine) {
+void processLine(const string& currentLine) {
     int numSpaces = countSpaces(currentLine);
-    std::string splitString[numSpaces + 1];
-    std::stringstream ssin(currentLine);
+    string splitString[numSpaces + 1];
+    stringstream ssin(currentLine);
     int wordIndex = 0;
     // splitString[i]
     // 0 = Command Code
@@ -59,7 +60,7 @@ void processLine(const std::string& currentLine) {
             splitString[wordIndex] = splitString[wordIndex].substr(2);
         }
         // Uncomment for viewing indexes of the command codes
-//        std::cout << "CURRENT SPLIT STRING IS: " << "Index:" << wordIndex << " - " << splitString[wordIndex] << std::endl;
+//        cout << "CURRENT SPLIT STRING IS: " << "Index:" << wordIndex << " - " << splitString[wordIndex] << endl;
 
         ++wordIndex;
     }
@@ -97,37 +98,37 @@ void processLine(const std::string& currentLine) {
     switch (splitString->at(0)) {
         case 'C': {
             // Set proper system configuration variables
-            int arrivalTime = std::stoi(splitString[1]);
-            int mainMemory = std::stoi(splitString[2]);
-            int serialDevices = std::stoi(splitString[3]);
-            int timeQuantum = std::stoi(splitString[4]);
+            int arrivalTime = stoi(splitString[1]);
+            int mainMemory = stoi(splitString[2]);
+            int serialDevices = stoi(splitString[3]);
+            int timeQuantum = stoi(splitString[4]);
             currentSystem = new CPU(mainMemory, serialDevices, timeQuantum);
             break;
         }
         case 'A': {
             // Call constructor Job
-            int arrivalTime = std::stoi(splitString[1]);
-            int jobNumber = std::stoi(splitString[2]);
-            int memoryRequired = std::stoi(splitString[3]);
-            int maxDevices = std::stoi(splitString[4]);
-            int runTime = std::stoi(splitString[5]);
-            int priorityNumber = std::stoi(splitString[6]);
+            int arrivalTime = stoi(splitString[1]);
+            int jobNumber = stoi(splitString[2]);
+            int memoryRequired = stoi(splitString[3]);
+            int maxDevices = stoi(splitString[4]);
+            int runTime = stoi(splitString[5]);
+            int priorityNumber = stoi(splitString[6]);
 
             Job *newJob = new Job(arrivalTime, jobNumber, memoryRequired, maxDevices, runTime, priorityNumber);
             break;
         }
         case 'Q': {
             // Process device request
-            int arrivalTime = std::stoi(splitString[1]);
-            int jobNumber = std::stoi(splitString[2]);
-            int devicesRequested = std::stoi(splitString[3]);
+            int arrivalTime = stoi(splitString[1]);
+            int jobNumber = stoi(splitString[2]);
+            int devicesRequested = stoi(splitString[3]);
             break;
         }
         case 'L': {
             // Process device release request
-            int arrivalTime = std::stoi(splitString[1]);
-            int jobNumber = std::stoi(splitString[2]);
-            int devicesReleased = std::stoi(splitString[3]);
+            int arrivalTime = stoi(splitString[1]);
+            int jobNumber = stoi(splitString[2]);
+            int devicesReleased = stoi(splitString[3]);
             break;
         }
         case 'D': {
