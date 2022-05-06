@@ -24,8 +24,8 @@ void HoldQueueTwo::insertAtFront(QueueNode *nodeToInsert) {
         tail = nodeToInsert;
     }
     else {
-        nodeToInsert->next = head;
-        head = nodeToInsert;
+        tail->next = nodeToInsert;
+        tail = nodeToInsert;
     }
 }
 
@@ -39,4 +39,10 @@ void HoldQueueTwo::printHoldQueue() {
         iterationNode = iterationNode->next;
     }
     std::cout << std::endl;
+}
+
+QueueNode* HoldQueueTwo::popTask(){
+    QueueNode *holder = head;
+    head = holder->next;
+    return holder;
 }

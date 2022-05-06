@@ -60,5 +60,7 @@ void HoldQueueOne::printHoldQueue() {
 }
 
 QueueNode* HoldQueueOne::popTask(){
-    return nullptr;
+    QueueNode *holder = head;
+    head = holder->next;
+    return holder;
 }

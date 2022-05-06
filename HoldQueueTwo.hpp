@@ -15,6 +15,7 @@ public:
     HoldQueueTwo();
     void insertAtFront(QueueNode *nodeToInsert);
     void printHoldQueue();
+    QueueNode* popTask();
 };
 
 
