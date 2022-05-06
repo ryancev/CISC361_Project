@@ -24,6 +24,16 @@ public:
     int runningTime;
     int priorityNumber;
 
+    /**
+     * Constructor: Creates a new job with the specified parameters
+     *
+     * @param arrivalTime The time that the job arrived at
+     * @param jobNumber A number representing this job
+     * @param memoryNeeded Amount of memory needed for the job
+     * @param maxDevices The max devices needed at any point during execution
+     * @param runningTime The amount of time that the job will run for
+     * @param priorityNumber A number representing the priority of the job
+     */
     Job(int arrivalTime, int jobNumber, int memoryNeeded, int maxDevices, int runningTime, int priorityNumber);
 };
 
