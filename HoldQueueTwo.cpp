@@ -40,3 +40,9 @@ void HoldQueueTwo::printHoldQueue() {
     }
     std::cout << std::endl;
 }
+
+QueueNode* HoldQueueTwo::popTask(){
+    QueueNode *holder = head;
+    head = holder->next;
+    return holder;
+}
