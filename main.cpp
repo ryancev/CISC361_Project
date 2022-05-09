@@ -19,10 +19,12 @@ HoldQueueTwo *holdQueueTwo;
 int main() {
     string currentLine;
     ifstream inputFile("../test_input.txt");
+    holdQueueTwo = new HoldQueueTwo();
     while (getline(inputFile, currentLine)) {
         cout << currentLine << endl;
         processLine(currentLine);
     }
+    holdQueueTwo->printHoldQueue();
     return 0;
 }
 
@@ -115,6 +117,8 @@ void processLine(const string& currentLine) {
             int priorityNumber = stoi(splitString[6]);
 
             Job *newJob = new Job(arrivalTime, jobNumber, memoryRequired, maxDevices, runTime, priorityNumber);
+            QueueNode *queueNode = new QueueNode(newJob);
+            holdQueueTwo->queueTask(queueNode);
             break;
         }
         case 'Q': {

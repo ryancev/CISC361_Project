@@ -13,9 +13,9 @@ public:
     QueueNode *head;
     QueueNode *tail;
     HoldQueueTwo();
-    void insertAtFront(QueueNode *nodeToInsert);
+    void queueTask(QueueNode *nodeToInsert);
     void printHoldQueue();
-    QueueNode* popTask();
+    QueueNode* deQueueTask();
 };
 
 
