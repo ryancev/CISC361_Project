@@ -18,10 +18,11 @@ HoldQueueTwo::HoldQueueTwo() {
  *
  * @param nodeToInsert The node that will be inserted into the linked list
  */
-void HoldQueueTwo::insertAtFront(QueueNode *nodeToInsert) {
+void HoldQueueTwo::queueTask(QueueNode *nodeToInsert) {
     if (head == nullptr && tail == nullptr) {
         head = nodeToInsert;
         tail = nodeToInsert;
+        tail->next = head;
     }
     else {
         tail->next = nodeToInsert;
@@ -41,7 +42,7 @@ void HoldQueueTwo::printHoldQueue() {
     std::cout << std::endl;
 }
 
-QueueNode* HoldQueueTwo::popTask(){
+QueueNode* HoldQueueTwo::deQueueTask(){
     QueueNode *holder = head;
     head = holder->next;
     return holder;

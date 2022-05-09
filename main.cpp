@@ -115,6 +115,7 @@ void processLine(const string& currentLine) {
             int priorityNumber = stoi(splitString[6]);
 
             Job *newJob = new Job(arrivalTime, jobNumber, memoryRequired, maxDevices, runTime, priorityNumber);
+            QueueNode *queueNode = new QueueNode(newJob);
             break;
         }
         case 'Q': {
