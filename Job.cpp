@@ -19,3 +19,7 @@ int Job::getTurnAroundTime() const {
     }
     return finishTime - arrivalTime;
 }
+
+int Job::getTimeRanFor() const {
+    return timeRanFor;
+}

@@ -7,6 +7,7 @@
 #include <string>
 #include "CompleteQueue.hpp"
 #include "HoldQueueOne.hpp"
+#include "ReadyQueue.hpp"
 
 using namespace std;
 
@@ -23,12 +24,14 @@ HoldQueueOne *holdQueueOne;
 /** Second hold queue, FIFO **/
 HoldQueueTwo *holdQueueTwo;
 /** Complete Queue, contains jobs that were completed */
-HoldQueueTwo *completeQueue;
+CompleteQueue *completeQueue;
+ReadyQueue *readyQueue;
 
 int main() {
     string currentLine;
     ifstream inputFile("../test_input.txt");
     completeQueue = new CompleteQueue();
+    readyQueue = new ReadyQueue();
     holdQueueOne = new HoldQueueOne();
     holdQueueTwo = new HoldQueueTwo();
     while (getline(inputFile, currentLine)) {
@@ -131,6 +134,7 @@ void processLine(const string& currentLine) {
             QueueNode *queueNode = new QueueNode(newJob);
             completeQueue->queueTask(queueNode);
             holdQueueTwo->queueTask(queueNode);
+            readyQueue->queueTask(queueNode);
             break;
         }
         case 'Q': {
@@ -173,4 +177,6 @@ void printSystemInfo() {
     holdQueueOne->printHoldQueue();
     cout << "Hold Queue 2:" << endl;
     holdQueueTwo->printHoldQueue();
+    cout << "Ready Queue:" << endl;
+    readyQueue->printHoldQueue();
 }

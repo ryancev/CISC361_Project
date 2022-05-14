@@ -11,7 +11,7 @@
 class CompleteQueue : public HoldQueueTwo {
 public:
     CompleteQueue();
-    void printHoldQueue();
+    void printHoldQueue() override;
 };
 
 

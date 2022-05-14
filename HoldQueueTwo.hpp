@@ -10,6 +10,7 @@
 
 class HoldQueueTwo {
     friend class CompleteQueue;
+    friend class ReadyQueue;
 public:
     QueueNode *head;
     QueueNode *tail;
