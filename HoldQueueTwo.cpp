@@ -5,6 +5,9 @@
 #include "HoldQueueTwo.hpp"
 #include <iostream>
 
+
+using namespace std;
+
 /**
  * Default Constructor: Initializes the head and tail pointers to nullptr
  */
@@ -36,10 +39,10 @@ void HoldQueueTwo::queueTask(QueueNode *nodeToInsert) {
 void HoldQueueTwo::printHoldQueue() {
     QueueNode *iterationNode = head;
     while (iterationNode != nullptr) {
-        std::cout << iterationNode->job->jobNumber << " ";
+        cout << iterationNode->job->jobNumber << " ";
         iterationNode = iterationNode->next;
     }
-    std::cout << std::endl;
+    cout << endl;
 }
 
 QueueNode* HoldQueueTwo::deQueueTask(){

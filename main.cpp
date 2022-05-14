@@ -5,11 +5,13 @@
 #include "HoldQueueTwo.hpp"
 #include "CPU.hpp"
 #include <string>
+#include "CompleteQueue.hpp"
 
 using namespace std;
 
 int countSpaces(const string& currentLine);
 void processLine(const string& currentLine);
+void printSystemInfo();
 
 int currentTime = 0;
 
@@ -17,10 +19,13 @@ int currentTime = 0;
 CPU *currentSystem;
 /** Second hold queue, FIFO **/
 HoldQueueTwo *holdQueueTwo;
+/** Complete Queue, contains jobs that were completed */
+HoldQueueTwo *completeQueue;
 
 int main() {
     string currentLine;
     ifstream inputFile("../test_input.txt");
+    completeQueue = new CompleteQueue();
     while (getline(inputFile, currentLine)) {
         cout << currentLine << endl;
         processLine(currentLine);
@@ -119,6 +124,7 @@ void processLine(const string& currentLine) {
 
             Job *newJob = new Job(arrivalTime, jobNumber, memoryRequired, maxDevices, runTime, priorityNumber);
             QueueNode *queueNode = new QueueNode(newJob);
+            completeQueue->queueTask(queueNode);
             break;
         }
         case 'Q': {
@@ -135,7 +141,27 @@ void processLine(const string& currentLine) {
         }
         case 'D': {
             // Process system info display
+            printSystemInfo();
             break;
         }
     }
+}
+
+static void makeLines() {
+    int numLines = 56;
+    for (int i = 0; i < numLines; i++) {
+        cout << "-";
+    }
+    cout << endl;
+}
+
+void printSystemInfo() {
+    makeLines();
+    cout << "At time: " << currentTime << endl;
+    cout << "Current Available Main Memory: " << currentSystem->getAvailableMemory() << endl;
+    cout << "Current Devices: " << currentSystem->getAvailableDevices() << endl;
+    makeLines();
+    cout << "Completed Jobs:" << endl;
+    completeQueue->printHoldQueue();
+
 }
