@@ -12,6 +12,8 @@ class CompleteQueue : public HoldQueueTwo {
 public:
     CompleteQueue();
     void printHoldQueue() override;
+    int calculateAvgTurnaround();
+    void printAvgTurnaround();
 };
 
 

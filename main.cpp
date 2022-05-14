@@ -189,4 +189,5 @@ void printSystemInfo() {
     currentSystem->printCurrentJob();
     cout << "Wait Queue:" << endl;
     waitQueue->printHoldQueue();
+    completeQueue->printAvgTurnaround();
 }

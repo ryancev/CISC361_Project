@@ -4,7 +4,6 @@
 
 #include "CPU.hpp"
 #include <iostream>
-#include "QueueNode.hpp"
 
 using namespace std;
 
@@ -42,6 +41,4 @@ void CPU::printCurrentJob() {
         cout << endl;
     }
     cout << endl;
-
-
 }
