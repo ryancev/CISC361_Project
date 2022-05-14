@@ -11,6 +11,7 @@
 class HoldQueueTwo {
     friend class CompleteQueue;
     friend class ReadyQueue;
+    friend class WaitQueue;
 public:
     QueueNode *head;
     QueueNode *tail;

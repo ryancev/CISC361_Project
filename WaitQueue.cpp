@@ -2,17 +2,18 @@
 // Created by Ryan Evans on 5/14/22.
 //
 
-#include "ReadyQueue.hpp"
-#include <iostream>
+
+#include <iostream>>
+#include "WaitQueue.hpp"
 
 using namespace std;
 
-ReadyQueue::ReadyQueue() {
+WaitQueue::WaitQueue() {
     head = nullptr;
     tail = nullptr;
 }
 
-void ReadyQueue::printHoldQueue() {
+void WaitQueue::printHoldQueue() {
     QueueNode *iterationNode = head;
     cout << "----------------------------------" << endl;
     cout << "Job ID    Run Time    Time Accrued" << endl;
@@ -32,4 +33,3 @@ void ReadyQueue::printHoldQueue() {
     }
     cout << endl;
 }
-

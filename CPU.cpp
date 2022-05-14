@@ -37,7 +37,7 @@ void CPU::printCurrentJob() {
         cout << "   " << currentJob->jobNumber;
         cout << "           ";
         cout << currentJob->runningTime;
-        cout << "             ";
+        cout << "            ";
         cout << currentJob->getRemainingTime();
         cout << endl;
     }

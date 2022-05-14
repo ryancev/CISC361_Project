@@ -8,6 +8,7 @@
 #include "CompleteQueue.hpp"
 #include "HoldQueueOne.hpp"
 #include "ReadyQueue.hpp"
+#include "WaitQueue.hpp"
 
 using namespace std;
 
@@ -26,6 +27,7 @@ HoldQueueTwo *holdQueueTwo;
 /** Complete Queue, contains jobs that were completed */
 CompleteQueue *completeQueue;
 ReadyQueue *readyQueue;
+WaitQueue *waitQueue;
 
 int main() {
     string currentLine;
@@ -34,6 +36,7 @@ int main() {
     readyQueue = new ReadyQueue();
     holdQueueOne = new HoldQueueOne();
     holdQueueTwo = new HoldQueueTwo();
+    waitQueue = new WaitQueue();
     while (getline(inputFile, currentLine)) {
         cout << currentLine << endl;
         processLine(currentLine);
@@ -137,6 +140,7 @@ void processLine(const string& currentLine) {
             holdQueueTwo->queueTask(queueNode);
             readyQueue->queueTask(queueNode);
             currentSystem->updateCurrentJob(newJob);
+            waitQueue->queueTask(queueNode);
             break;
         }
         case 'Q': {
@@ -183,4 +187,6 @@ void printSystemInfo() {
     readyQueue->printHoldQueue();
     cout << "Process Running on CPU:" << endl;
     currentSystem->printCurrentJob();
+    cout << "Wait Queue:" << endl;
+    waitQueue->printHoldQueue();
 }
