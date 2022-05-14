@@ -11,6 +11,8 @@ using namespace std;
 int countSpaces(const string& currentLine);
 void processLine(const string& currentLine);
 
+int currentTime = 0;
+
 /** Current system configuration **/
 CPU *currentSystem;
 /** Second hold queue, FIFO **/
@@ -95,10 +97,10 @@ void processLine(const string& currentLine) {
     //        The contents of each queue
     //        If it is the last display, print system turnaround time, system weighted turnaround time
     // Checking the command code of the input
+    int arrivalTime = stoi(splitString[1]);
     switch (splitString->at(0)) {
         case 'C': {
             // Set proper system configuration variables
-            int arrivalTime = stoi(splitString[1]);
             int mainMemory = stoi(splitString[2]);
             int serialDevices = stoi(splitString[3]);
             int timeQuantum = stoi(splitString[4]);
@@ -107,7 +109,6 @@ void processLine(const string& currentLine) {
         }
         case 'A': {
             // Call constructor Job
-            int arrivalTime = stoi(splitString[1]);
             int jobNumber = stoi(splitString[2]);
             int memoryRequired = stoi(splitString[3]);
             int maxDevices = stoi(splitString[4]);
@@ -120,14 +121,12 @@ void processLine(const string& currentLine) {
         }
         case 'Q': {
             // Process device request
-            int arrivalTime = stoi(splitString[1]);
             int jobNumber = stoi(splitString[2]);
             int devicesRequested = stoi(splitString[3]);
             break;
         }
         case 'L': {
             // Process device release request
-            int arrivalTime = stoi(splitString[1]);
             int jobNumber = stoi(splitString[2]);
             int devicesReleased = stoi(splitString[3]);
             break;
