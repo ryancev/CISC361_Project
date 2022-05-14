@@ -132,6 +132,7 @@ void processLine(const string& currentLine) {
 
             Job *newJob = new Job(arrivalTime, jobNumber, memoryRequired, maxDevices, runTime, priorityNumber);
             QueueNode *queueNode = new QueueNode(newJob);
+            // These are just for testing printing
             completeQueue->queueTask(queueNode);
             holdQueueTwo->queueTask(queueNode);
             readyQueue->queueTask(queueNode);
