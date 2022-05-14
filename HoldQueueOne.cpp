@@ -50,12 +50,6 @@ void HoldQueueOne::insertInOrder(QueueNode *nodeToInsert) {
     }
 }
 
-static void makeLines() {
-}
-
-static void makeThickLines() {
-}
-
 /**
  * Prints out the command codes of the jobs in the linked list - currently for debugging purposes
  */
@@ -63,12 +57,18 @@ void HoldQueueOne::printHoldQueue() {
     QueueNode *iterationNode = head;
     cout << "-------------------------" << endl;
     cout << "Job ID    Run Time" << endl;
+    cout << "=========================" << endl;
     while (iterationNode != nullptr) {
-        cout << "   " << iterationNode->job->jobNumber << "         " << iterationNode->job->runningTime;
+        cout << "   " << iterationNode->job->jobNumber;
+        if (iterationNode->job->runningTime < 10) {
+            cout << "          ";
+        } else {
+            cout << "         ";
+        }
+        cout << iterationNode->job->runningTime;
         cout << endl;
         iterationNode = iterationNode->next;
     }
-    cout << "=========================" << endl;
     cout << endl;
 }
 
