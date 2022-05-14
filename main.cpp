@@ -6,6 +6,7 @@
 #include "CPU.hpp"
 #include <string>
 #include "CompleteQueue.hpp"
+#include "HoldQueueOne.hpp"
 
 using namespace std;
 
@@ -17,6 +18,8 @@ int currentTime = 0;
 
 /** Current system configuration **/
 CPU *currentSystem;
+/** First Hold Queue */
+HoldQueueOne *holdQueueOne;
 /** Second hold queue, FIFO **/
 HoldQueueTwo *holdQueueTwo;
 /** Complete Queue, contains jobs that were completed */
@@ -26,6 +29,8 @@ int main() {
     string currentLine;
     ifstream inputFile("../test_input.txt");
     completeQueue = new CompleteQueue();
+    holdQueueOne = new HoldQueueOne();
+    holdQueueTwo = new HoldQueueTwo();
     while (getline(inputFile, currentLine)) {
         cout << currentLine << endl;
         processLine(currentLine);
@@ -125,6 +130,7 @@ void processLine(const string& currentLine) {
             Job *newJob = new Job(arrivalTime, jobNumber, memoryRequired, maxDevices, runTime, priorityNumber);
             QueueNode *queueNode = new QueueNode(newJob);
             completeQueue->queueTask(queueNode);
+            holdQueueTwo->queueTask(queueNode);
             break;
         }
         case 'Q': {
@@ -163,5 +169,8 @@ void printSystemInfo() {
     makeLines();
     cout << "Completed Jobs:" << endl;
     completeQueue->printHoldQueue();
-
+    cout << "Hold Queue 1:" << endl;
+    holdQueueOne->printHoldQueue();
+    cout << "Hold Queue 2:" << endl;
+    holdQueueTwo->printHoldQueue();
 }

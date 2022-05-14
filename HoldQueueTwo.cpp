@@ -33,15 +33,25 @@ void HoldQueueTwo::queueTask(QueueNode *nodeToInsert) {
     }
 }
 
+static void makeLines() {
+}
+
+static void makeThickLines() {
+}
+
 /**
  * Prints out the command codes of the jobs in the linked list - currently for debugging purposes
  */
 void HoldQueueTwo::printHoldQueue() {
     QueueNode *iterationNode = head;
+    cout << "-------------------------" << endl;
+    cout << "Job ID    Run Time" << endl;
     while (iterationNode != nullptr) {
-        cout << iterationNode->job->jobNumber << " ";
+        cout << "   " << iterationNode->job->jobNumber << "         " << iterationNode->job->runningTime;
+        cout << endl;
         iterationNode = iterationNode->next;
     }
+    cout << "=========================" << endl;
     cout << endl;
 }
 
