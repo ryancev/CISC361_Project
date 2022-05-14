@@ -23,7 +23,8 @@ public:
     int maxDevices;
     int runningTime;
     int priorityNumber;
-
+    int finishTime = 0;
+    int turnAroundTime = 0;
     /**
      * Constructor: Creates a new job with the specified parameters
      *
@@ -35,6 +36,8 @@ public:
      * @param priorityNumber A number representing the priority of the job
      */
     Job(int arrivalTime, int jobNumber, int memoryNeeded, int maxDevices, int runningTime, int priorityNumber);
+
+    int getTurnAroundTime() const;
 };
 
 

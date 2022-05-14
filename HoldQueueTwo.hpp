@@ -9,12 +9,14 @@
 #include "QueueNode.hpp"
 
 class HoldQueueTwo {
+    friend class CompleteQueue;
 public:
     QueueNode *head;
     QueueNode *tail;
     HoldQueueTwo();
     void queueTask(QueueNode *nodeToInsert);
-    void printHoldQueue();
+
+    virtual void printHoldQueue();
     QueueNode* deQueueTask();
 };
 

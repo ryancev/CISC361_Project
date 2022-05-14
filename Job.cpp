@@ -12,3 +12,10 @@ Job::Job(int arrivalTime, int jobNumber, int memoryNeeded, int maxDevices, int r
     Job::priorityNumber = priorityNumber;
     Job::runningTime = runningTime;
 }
+
+int Job::getTurnAroundTime() const {
+    if (finishTime == 0) {
+        return 0;
+    }
+    return finishTime - arrivalTime;
+}

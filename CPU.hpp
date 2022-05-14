@@ -34,6 +34,8 @@ public:
      * @param newJob The job that will become the new currently running job
      */
     void updateCurrentJob(Job *newJob);
+    int getAvailableMemory() const;
+    int getAvailableDevices() const;
 };
 
 

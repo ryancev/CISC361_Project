@@ -5,20 +5,27 @@
 #include "HoldQueueTwo.hpp"
 #include "CPU.hpp"
 #include <string>
+#include "CompleteQueue.hpp"
 
 using namespace std;
 
 int countSpaces(const string& currentLine);
 void processLine(const string& currentLine);
+void printSystemInfo();
+
+int currentTime = 0;
 
 /** Current system configuration **/
 CPU *currentSystem;
 /** Second hold queue, FIFO **/
 HoldQueueTwo *holdQueueTwo;
+/** Complete Queue, contains jobs that were completed */
+HoldQueueTwo *completeQueue;
 
 int main() {
     string currentLine;
     ifstream inputFile("../test_input.txt");
+    completeQueue = new CompleteQueue();
     while (getline(inputFile, currentLine)) {
         cout << currentLine << endl;
         processLine(currentLine);
@@ -95,10 +102,12 @@ void processLine(const string& currentLine) {
     //        The contents of each queue
     //        If it is the last display, print system turnaround time, system weighted turnaround time
     // Checking the command code of the input
+    int arrivalTime = stoi(splitString[1]);
+    int timeSinceLastEvent = arrivalTime - currentTime;
+    currentTime = arrivalTime;
     switch (splitString->at(0)) {
         case 'C': {
             // Set proper system configuration variables
-            int arrivalTime = stoi(splitString[1]);
             int mainMemory = stoi(splitString[2]);
             int serialDevices = stoi(splitString[3]);
             int timeQuantum = stoi(splitString[4]);
@@ -107,7 +116,6 @@ void processLine(const string& currentLine) {
         }
         case 'A': {
             // Call constructor Job
-            int arrivalTime = stoi(splitString[1]);
             int jobNumber = stoi(splitString[2]);
             int memoryRequired = stoi(splitString[3]);
             int maxDevices = stoi(splitString[4]);
@@ -116,25 +124,44 @@ void processLine(const string& currentLine) {
 
             Job *newJob = new Job(arrivalTime, jobNumber, memoryRequired, maxDevices, runTime, priorityNumber);
             QueueNode *queueNode = new QueueNode(newJob);
+            completeQueue->queueTask(queueNode);
             break;
         }
         case 'Q': {
             // Process device request
-            int arrivalTime = stoi(splitString[1]);
             int jobNumber = stoi(splitString[2]);
             int devicesRequested = stoi(splitString[3]);
             break;
         }
         case 'L': {
             // Process device release request
-            int arrivalTime = stoi(splitString[1]);
             int jobNumber = stoi(splitString[2]);
             int devicesReleased = stoi(splitString[3]);
             break;
         }
         case 'D': {
             // Process system info display
+            printSystemInfo();
             break;
         }
     }
+}
+
+static void makeLines() {
+    int numLines = 56;
+    for (int i = 0; i < numLines; i++) {
+        cout << "-";
+    }
+    cout << endl;
+}
+
+void printSystemInfo() {
+    makeLines();
+    cout << "At time: " << currentTime << endl;
+    cout << "Current Available Main Memory: " << currentSystem->getAvailableMemory() << endl;
+    cout << "Current Devices: " << currentSystem->getAvailableDevices() << endl;
+    makeLines();
+    cout << "Completed Jobs:" << endl;
+    completeQueue->printHoldQueue();
+
 }
