@@ -36,6 +36,7 @@ public:
     void updateCurrentJob(Job *newJob);
     int getAvailableMemory() const;
     int getAvailableDevices() const;
+    void printCurrentJob();
 };
 
 

@@ -42,6 +42,7 @@ public:
     Job(int arrivalTime, int jobNumber, int memoryNeeded, int maxDevices, int runningTime, int priorityNumber);
 
     int getTurnAroundTime() const;
+    int getRemainingTime() const;
 };
 
 

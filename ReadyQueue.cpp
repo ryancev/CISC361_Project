@@ -29,6 +29,7 @@ void ReadyQueue::printHoldQueue() {
         cout << iterationNode->job->timeRanFor;
         cout << endl;
         iterationNode = iterationNode->next;
+
     }
     cout << endl;
 }

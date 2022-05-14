@@ -23,3 +23,8 @@ int Job::getTurnAroundTime() const {
 int Job::getTimeRanFor() const {
     return timeRanFor;
 }
+
+int Job::getRemainingTime() const {
+    return runningTime - timeRanFor;
+}
+

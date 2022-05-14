@@ -135,6 +135,7 @@ void processLine(const string& currentLine) {
             completeQueue->queueTask(queueNode);
             holdQueueTwo->queueTask(queueNode);
             readyQueue->queueTask(queueNode);
+            currentSystem->updateCurrentJob(newJob);
             break;
         }
         case 'Q': {
@@ -179,4 +180,6 @@ void printSystemInfo() {
     holdQueueTwo->printHoldQueue();
     cout << "Ready Queue:" << endl;
     readyQueue->printHoldQueue();
+    cout << "Process Running on CPU:" << endl;
+    currentSystem->printCurrentJob();
 }
