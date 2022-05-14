@@ -3,8 +3,11 @@
 //
 
 #include "HoldQueueOne.hpp"
-//#include "QueueNode.hpp"
+#include "QueueNode.hpp"
 #include <iostream>
+
+using namespace std;
+
 
 /**
  * Default Constructor: Initializes the head and tail pointers to nullptr
@@ -52,11 +55,21 @@ void HoldQueueOne::insertInOrder(QueueNode *nodeToInsert) {
  */
 void HoldQueueOne::printHoldQueue() {
     QueueNode *iterationNode = head;
+    cout << "-------------------------" << endl;
+    cout << "Job ID    Run Time" << endl;
+    cout << "=========================" << endl;
     while (iterationNode != nullptr) {
-        std::cout << iterationNode->job->jobNumber << " ";
+        cout << "   " << iterationNode->job->jobNumber;
+        if (iterationNode->job->runningTime < 10) {
+            cout << "          ";
+        } else {
+            cout << "         ";
+        }
+        cout << iterationNode->job->runningTime;
+        cout << endl;
         iterationNode = iterationNode->next;
     }
-    std::cout << std::endl;
+    cout << endl;
 }
 
 QueueNode* HoldQueueOne::popTask(){

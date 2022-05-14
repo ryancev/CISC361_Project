@@ -38,8 +38,18 @@ void HoldQueueTwo::queueTask(QueueNode *nodeToInsert) {
  */
 void HoldQueueTwo::printHoldQueue() {
     QueueNode *iterationNode = head;
+    cout << "-------------------------" << endl;
+    cout << "Job ID    Run Time" << endl;
+    cout << "=========================" << endl;
     while (iterationNode != nullptr) {
-        cout << iterationNode->job->jobNumber << " ";
+        cout << "   " << iterationNode->job->jobNumber;
+        if (iterationNode->job->runningTime < 10) {
+            cout << "          ";
+        } else {
+            cout << "         ";
+        }
+        cout << iterationNode->job->runningTime;
+        cout << endl;
         iterationNode = iterationNode->next;
     }
     cout << endl;

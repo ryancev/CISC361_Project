@@ -25,6 +25,10 @@ public:
     int priorityNumber;
     int finishTime = 0;
     int turnAroundTime = 0;
+    int timeRanFor = 0;
+
+    int getTimeRanFor() const;
+
     /**
      * Constructor: Creates a new job with the specified parameters
      *
@@ -38,6 +42,7 @@ public:
     Job(int arrivalTime, int jobNumber, int memoryNeeded, int maxDevices, int runningTime, int priorityNumber);
 
     int getTurnAroundTime() const;
+    int getRemainingTime() const;
 };
 
 
