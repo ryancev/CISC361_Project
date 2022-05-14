@@ -98,6 +98,8 @@ void processLine(const string& currentLine) {
     //        If it is the last display, print system turnaround time, system weighted turnaround time
     // Checking the command code of the input
     int arrivalTime = stoi(splitString[1]);
+    int timeSinceLastEvent = arrivalTime - currentTime;
+    currentTime = arrivalTime;
     switch (splitString->at(0)) {
         case 'C': {
             // Set proper system configuration variables
