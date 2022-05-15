@@ -13,6 +13,7 @@ using namespace std;
  * Default Constructor: Initializes the head and tail pointers to nullptr
  */
 HoldQueueOne::HoldQueueOne() {
+    length = 0;
     head = nullptr;
     tail = nullptr;
 }
@@ -34,7 +35,7 @@ void HoldQueueOne::insertInOrder(QueueNode *nodeToInsert) {
             head = nodeToInsert;
         }
         else{
-            while(holder->next != nullptr &&  nodeToInsert->job->runningTime > holder->next->job->runningTime){
+            while(holder->next != nullptr &&  nodeToInsert->job->runningTime >= holder->next->job->runningTime){
                 holder = holder->next;
             }
             if(holder->next != nullptr){
@@ -48,6 +49,7 @@ void HoldQueueOne::insertInOrder(QueueNode *nodeToInsert) {
             }
         }
     }
+    length++;
 }
 
 /**
@@ -75,5 +77,6 @@ void HoldQueueOne::printHoldQueue() {
 QueueNode* HoldQueueOne::popTask(){
     QueueNode *holder = head;
     head = holder->next;
+    length--;
     return holder;
 }

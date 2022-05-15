@@ -55,6 +55,10 @@ public:
     };
     /** Array containing the processes for the system*/
     Process *processArr;
+
+    Process *returnProcess();
+    Job* getCurrentJob();
+    void bankerAlg(Job* testJob, int devReq);
 };
 
 

@@ -15,11 +15,14 @@ class HoldQueueTwo {
 public:
     QueueNode *head;
     QueueNode *tail;
+    int length;
     HoldQueueTwo();
     void queueTask(QueueNode *nodeToInsert);
+    void addBank(Job* newJob);
 
     virtual void printHoldQueue();
     QueueNode* deQueueTask();
+    ~HoldQueueTwo();
 };
 
 
