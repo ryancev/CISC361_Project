@@ -26,6 +26,7 @@ public:
     int finishTime = 0;
     int turnAroundTime = 0;
     int timeRanFor = 0;
+    int devicesHeld = 0;
 
     int getTimeRanFor() const;
 
