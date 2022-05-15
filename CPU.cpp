@@ -25,6 +25,9 @@ void CPU::updateCurrentJob(Job *newJob) {
     currentJob = newJob ;
 }
 
+/**
+ * Calculated the available amount of memory by subtracting the memory used from the total memory
+ */
 int CPU::getAvailableMemory() const {
     return MAIN_MEMORY - memoryUsed;
 }
@@ -46,4 +49,17 @@ void CPU::printCurrentJob() {
         cout << endl;
     }
     cout << endl;
+}
+
+void CPU::setMemoryUsed(int jobsMaxMemory, bool isFreed) {
+    if (!isFreed) {
+        CPU::memoryUsed += jobsMaxMemory;
+    }
+    else {
+        CPU::memoryUsed -=jobsMaxMemory;
+    }
+}
+
+int CPU::getMainMemory() const {
+    return MAIN_MEMORY;
 }
