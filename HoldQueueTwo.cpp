@@ -59,6 +59,7 @@ void HoldQueueTwo::addBank(Job* newJob){
     }
 }
 
+
 /**
  * Prints out the command codes of the jobs in the linked list - currently for debugging purposes
  */

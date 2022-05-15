@@ -18,6 +18,7 @@ public:
     int length;
     HoldQueueTwo();
     void queueTask(QueueNode *nodeToInsert);
+
     void addBank(Job* newJob);
 
     virtual void printHoldQueue();
