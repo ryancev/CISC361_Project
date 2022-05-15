@@ -14,6 +14,11 @@ CPU::CPU(int mainMemory, int serialDevices, int timeQuantum) {
     memoryUsed = 0;
     devicesUsed = 0;
     currentJob = nullptr;
+    processArr = new Process[serialDevices];
+    for (int i = 0; i < serialDevices; i++) {
+        processArr[i].isUsed = false;
+        processArr[i].jobUsing = nullptr;
+    }
 }
 
 void CPU::updateCurrentJob(Job *newJob) {
@@ -43,14 +48,30 @@ void CPU::printCurrentJob() {
     cout << endl;
 }
 
-Job *CPU::getCurrentJob(){
-    return currentJob;
-}
-
-int CPU::getMaxDevices(){
-    return SERIAL_DEVICES;
-}
-
-int CPU::getDevicesUsed(){
-    return devicesUsed;
+void CPU::bankerAlg(int jobNo, int devReq){
+    //takes the current active job in the CPU, and checks if it can safely receive the devices it has requested
+    if(currentJob->jobNumber == jobNo && getAvailableDevices() >= devReq){
+        
+        /*
+        int allocation[ready->length + 1];
+        QueueNode* holder = ready->head;
+        for(int i=0; i < ready->length; i++){
+            allocation[i] = holder->job->currentDevicesAlloc;
+            holder = holder->next;
+        }
+        allocation[ready->length] = currentJob->currentDevicesAlloc;
+        int simMaxDev = cpu->getMaxDevices();
+        int simDevUsed = cpu->getDevicesUsed();
+        for(int i=0; i < ready->length + 1; i++){
+            int simRelease = -1;
+            holder = ready->head;
+            for(int j=0; j<ready->length + 1; j++){
+                if(allocation[j] != -1 && holder->job->maxDevices - holder->job->currentDevicesAlloc >= simMaxDev-simDevUsed){
+                    
+                }
+                holder = holder->next;
+            }
+        }
+        */
+    }else{}
 }
