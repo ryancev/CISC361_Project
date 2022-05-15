@@ -14,6 +14,7 @@ using namespace std;
 HoldQueueTwo::HoldQueueTwo() {
     head = nullptr;
     tail = nullptr;
+    length = 0;
 }
 
 /**
@@ -25,12 +26,12 @@ void HoldQueueTwo::queueTask(QueueNode *nodeToInsert) {
     if (head == nullptr && tail == nullptr) {
         head = nodeToInsert;
         tail = nodeToInsert;
-        tail->next = head;
     }
     else {
         tail->next = nodeToInsert;
         tail = nodeToInsert;
     }
+    length++;
 }
 
 /**
@@ -58,5 +59,6 @@ void HoldQueueTwo::printHoldQueue() {
 QueueNode* HoldQueueTwo::deQueueTask(){
     QueueNode *holder = head;
     head = holder->next;
+    length--;
     return holder;
 }

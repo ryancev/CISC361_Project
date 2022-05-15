@@ -42,3 +42,15 @@ void CPU::printCurrentJob() {
     }
     cout << endl;
 }
+
+Job *CPU::getCurrentJob(){
+    return currentJob;
+}
+
+int CPU::getMaxDevices(){
+    return SERIAL_DEVICES;
+}
+
+int CPU::getDevicesUsed(){
+    return devicesUsed;
+}

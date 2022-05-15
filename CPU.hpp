@@ -37,6 +37,9 @@ public:
     int getAvailableMemory() const;
     int getAvailableDevices() const;
     void printCurrentJob();
+    Job* getCurrentJob();
+    int getMaxDevices();
+    int getDevicesUsed();
 };
 
 

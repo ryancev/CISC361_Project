@@ -191,3 +191,29 @@ void printSystemInfo() {
     waitQueue->printHoldQueue();
     completeQueue->printAvgTurnaround();
 }
+
+void bankerAlg(int jobNo, int numDev, CPU *cpu, WaitQueue* wait, ReadyQueue* ready){
+    //takes the current active job in the CPU, and checks if it can safely receive the devices it has requested
+    Job* currentJob = cpu->getCurrentJob();
+    if(currentJob->jobNumber == jobNo){
+        int allocation[ready->length + 1];
+        QueueNode* holder = ready->head;
+        for(int i=0; i < ready->length; i++){
+            allocation[i] = holder->job->currentDevicesAlloc;
+            holder = holder->next;
+        }
+        allocation[ready->length] = currentJob->currentDevicesAlloc;
+        int simMaxDev = cpu->getMaxDevices();
+        int simDevUsed = cpu->getDevicesUsed();
+        for(int i=0; i < ready->length + 1; i++){
+            int simRelease = -1;
+            holder = ready->head;
+            for(int j=0; j<ready->length + 1; j++){
+                if(allocation[j] != -1 && holder->job->maxDevices - holder->job->currentDevicesAlloc >= simMaxDev-simDevUsed){
+                    
+                }
+                holder = holder->next;
+            }
+        }
+    }else{}
+}

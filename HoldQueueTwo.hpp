@@ -15,6 +15,7 @@ class HoldQueueTwo {
 public:
     QueueNode *head;
     QueueNode *tail;
+    int length;
     HoldQueueTwo();
     void queueTask(QueueNode *nodeToInsert);
 

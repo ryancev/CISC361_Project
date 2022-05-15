@@ -8,6 +8,7 @@ class HoldQueueOne {
 public:
     QueueNode *head;
     QueueNode *tail;
+    int length;
     HoldQueueOne();
     void insertInOrder(QueueNode *nodeToInsert);
     void printHoldQueue();
