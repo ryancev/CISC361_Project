@@ -37,6 +37,16 @@ public:
     int getAvailableMemory() const;
     int getAvailableDevices() const;
     void printCurrentJob();
+
+    int getMainMemory() const;
+
+    /**
+     *
+     * @param memoryUsed
+     * @param isFreed False if the job is being received, true if the device is being freed
+     */
+    void setMemoryUsed(int memoryUsed, bool isFreed);
+
     struct Process {
         /** True if the process is used, false is the process is available */
         bool isUsed;

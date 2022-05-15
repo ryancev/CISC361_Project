@@ -133,14 +133,29 @@ void processLine(const string& currentLine) {
             int runTime = stoi(splitString[5]);
             int priorityNumber = stoi(splitString[6]);
 
+            // If job requests more memory than system has total, ignore job request
+            if (memoryRequired > currentSystem->getMainMemory()) {
+                return;
+            }
+            // If available memory is greater than or equal to memory needed for job, update systems total memory
+            if (currentSystem->getAvailableMemory() >= memoryRequired) {
+                Job *newJob = new Job(arrivalTime, jobNumber, memoryRequired, maxDevices, runTime, priorityNumber);
+                QueueNode *queueNode = new QueueNode(newJob);
+                currentSystem->setMemoryUsed(memoryRequired, false);
+                // create process for job, put process into ready queue
+                readyQueue->queueTask(queueNode);
+                return;
+            }
+            // If there is enough total memory, but not enough available memory, code below executes
             Job *newJob = new Job(arrivalTime, jobNumber, memoryRequired, maxDevices, runTime, priorityNumber);
             QueueNode *queueNode = new QueueNode(newJob);
-            // These are just for testing printing
-            completeQueue->queueTask(queueNode);
-            holdQueueTwo->queueTask(queueNode);
-            readyQueue->queueTask(queueNode);
-            currentSystem->updateCurrentJob(newJob);
-            waitQueue->queueTask(queueNode);
+            if (priorityNumber == 1) {
+                // add to hold queue one when insert works
+            }
+            else {
+                // add to second hold queue
+                holdQueueTwo->queueTask(queueNode);
+            }
             break;
         }
         case 'Q': {

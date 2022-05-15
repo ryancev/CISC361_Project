@@ -17,17 +17,27 @@ class Job {
     //    R = Running time
     //    P __ = Priority number
 public:
+    /** The time that this job arrived at */
     int arrivalTime;
+    /** The number representing the job */
     int jobNumber;
+    /** The max amount of memory needed for the job */
     int memoryNeeded;
+    /** The max number of devices that the job will ever request */
     int maxDevices;
+    /** The total amount of time that the job will run (lifetime) */
     int runningTime;
+    /** The number representing the job's level of priority*/
     int priorityNumber;
+    /** The time that this job was completed at, 0 by default*/
     int finishTime = 0;
+    /** The finish time minus the arrival time, calculated with getTurnAroundTime()*/
     int turnAroundTime = 0;
+    /** The amount of time that the job has spent running on the CPU */
     int timeRanFor = 0;
+    /** The current number of devices being held by this job */
     int devicesHeld = 0;
-
+    /** Getter: Returns the number of time spent running on the CPU*/
     int getTimeRanFor() const;
 
     /**

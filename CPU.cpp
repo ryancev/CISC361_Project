@@ -26,6 +26,9 @@ void CPU::updateCurrentJob(Job *newJob) {
     currentJob = newJob ;
 }
 
+/**
+ * Calculated the available amount of memory by subtracting the memory used from the total memory
+ */
 int CPU::getAvailableMemory() const {
     return MAIN_MEMORY - memoryUsed;
 }
@@ -41,7 +44,7 @@ void CPU::printCurrentJob() {
     if (currentJob != nullptr) {
         cout << "   " << currentJob->jobNumber;
         cout << "           ";
-        cout << currentJob->runningTime;
+        cout << currentJob->timeRanFor;
         cout << "            ";
         cout << currentJob->getRemainingTime();
         cout << endl;
@@ -119,4 +122,16 @@ void CPU::bankerAlg(Job* testJob, int devReq){
     }else{
         //what to do if not enough resources exist to begin with???
     }
+}
+void CPU::setMemoryUsed(int jobsMaxMemory, bool isFreed) {
+    if (!isFreed) {
+        CPU::memoryUsed += jobsMaxMemory;
+    }
+    else {
+        CPU::memoryUsed -=jobsMaxMemory;
+    }
+}
+
+int CPU::getMainMemory() const {
+    return MAIN_MEMORY;
 }
