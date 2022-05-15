@@ -37,6 +37,14 @@ public:
     int getAvailableMemory() const;
     int getAvailableDevices() const;
     void printCurrentJob();
+    struct Process {
+        /** True if the process is used, false is the process is available */
+        bool isUsed;
+        /** Contains the job that is currently using the process*/
+        Job *jobUsing;
+    };
+    /** Array containing the processes for the system*/
+    Process *processArr;
 };
 
 

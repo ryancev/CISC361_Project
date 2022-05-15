@@ -14,6 +14,11 @@ CPU::CPU(int mainMemory, int serialDevices, int timeQuantum) {
     memoryUsed = 0;
     devicesUsed = 0;
     currentJob = nullptr;
+    processArr = new Process[serialDevices];
+    for (int i = 0; i < serialDevices; i++) {
+        processArr[i].isUsed = false;
+        processArr[i].jobUsing = nullptr;
+    }
 }
 
 void CPU::updateCurrentJob(Job *newJob) {
