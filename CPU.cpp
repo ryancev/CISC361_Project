@@ -109,7 +109,9 @@ void CPU::bankerAlg(Job* testJob, int devReq){
                 if(!processArr[processIterator].isUsed){
                     processArr[processIterator].isUsed = true;
                     processArr[processIterator].jobUsing = testJob;
+                    dedicate++;
                 }
+                processIterator++;
             }
         }else{
             //what to do if it's not safe???
