@@ -40,7 +40,7 @@ void CPU::printCurrentJob() {
     if (currentJob != nullptr) {
         cout << "   " << currentJob->jobNumber;
         cout << "           ";
-        cout << currentJob->runningTime;
+        cout << currentJob->timeRanFor;
         cout << "            ";
         cout << currentJob->getRemainingTime();
         cout << endl;
