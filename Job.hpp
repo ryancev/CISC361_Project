@@ -21,7 +21,6 @@ public:
     int jobNumber;
     int memoryNeeded;
     int maxDevices;
-    int currentDevicesAlloc = 0;
     int runningTime;
     int priorityNumber;
     int finishTime = 0;

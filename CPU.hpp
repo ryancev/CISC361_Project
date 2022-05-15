@@ -48,7 +48,7 @@ public:
 
     Process *returnProcess();
     Job* getCurrentJob();
-    void bankerAlg(int jobNo, int devReq);
+    void bankerAlg(Job* testJob, int devReq);
 };
 
 

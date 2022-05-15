@@ -34,6 +34,31 @@ void HoldQueueTwo::queueTask(QueueNode *nodeToInsert) {
     length++;
 }
 
+void HoldQueueTwo::addBank(Job* newJob){
+    //Special instance of adding for banker algorithm
+    //adding a node to this list requires creating a new instance of the QueueNode, to make sure no pointers are "damaged"
+    //adds only unique instances of jobs to the SLL
+    QueueNode* holder = head;
+    if(holder == nullptr){
+        QueueNode* add = new QueueNode(holder->job);
+        head = add;
+        tail = add;
+        length++;
+    }else{
+    while(holder->next != nullptr && holder->job->jobNumber != newJob->jobNumber){
+        holder = holder->next;
+    }
+        if(holder->next == nullptr){
+            if(holder->job->jobNumber != newJob->jobNumber){
+                QueueNode* add = new QueueNode(holder->job);
+                tail->next = add;
+                tail = add;
+                length++;
+            }
+        }
+    }
+}
+
 /**
  * Prints out the command codes of the jobs in the linked list - currently for debugging purposes
  */
@@ -61,4 +86,18 @@ QueueNode* HoldQueueTwo::deQueueTask(){
     head = holder->next;
     length--;
     return holder;
+}
+
+HoldQueueTwo::~HoldQueueTwo(){
+    QueueNode* holder = head;
+    QueueNode* holder2 = holder;
+    if(holder != nullptr){
+        while(holder2 != nullptr){
+            holder2 = holder2->next;
+            delete holder;
+            holder = holder2;
+        }
+    }
+    delete head;
+    delete tail;
 }
