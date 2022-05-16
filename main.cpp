@@ -14,6 +14,9 @@ using namespace std;
 
 int countSpaces(const string& currentLine);
 void processLine(const string& currentLine);
+void simulateInBetween(int lastEventTime, int duration);
+void checkHoldQueues();
+bool addNewToCPU();
 void queryWaitQueue();
 void printSystemInfo();
 
@@ -118,6 +121,9 @@ void processLine(const string& currentLine) {
     // Checking the command code of the input
     int arrivalTime = stoi(splitString[1]);
     int timeSinceLastEvent = arrivalTime - currentTime;
+
+    simulateInBetween(currentTime, timeSinceLastEvent);
+
     currentTime = arrivalTime;
     switch (splitString->at(0)) {
         case 'C': {
@@ -202,6 +208,97 @@ static void makeLines() {
         cout << "-";
     }
     cout << endl;
+}
+
+void simulateInBetween(int currentTime, int duration){
+    cout << "Testing" << endl;
+    int simRunTime = 0;
+    int nextCpuTime = 0;
+    int jobFinishTime = 0;
+    while(simRunTime < duration && currentSystem->getCurrentJob() != nullptr){
+        nextCpuTime = simRunTime + currentSystem->getQuantumLeft();
+        jobFinishTime = simRunTime + currentSystem->getCurrentJob()->job->getRemainingTime();
+        if(jobFinishTime <= nextCpuTime && nextCpuTime <= duration){
+            //if the job completely finishes before the next line is called
+            //Adds to complete queue, releases its devices (and memory), and updates its finish time
+            QueueNode* cpuJob = currentSystem->getCurrentJob();
+            completeQueue->queueTask(cpuJob);
+            currentSystem->releaseDevice(cpuJob, 0, true);
+            cpuJob->job->finishTime = currentTime + jobFinishTime;
+            //update the job's time on CPU
+            cpuJob->job->timeRanFor += jobFinishTime - simRunTime;
+            //see if freed devices can be used, and put next device on the CPU if possible
+            queryWaitQueue();
+            checkHoldQueues();
+            QueueNode* ready = readyQueue->deQueueTask();
+            currentSystem->updateCurrentJob(ready);
+            //adjust the simRunTime
+            simRunTime = jobFinishTime;
+        }else if(nextCpuTime < jobFinishTime && nextCpuTime <= duration){
+            //if the quantum ends before the job is done
+            //adds the current job to the 
+            QueueNode* cpuJob = currentSystem->getCurrentJob();
+            readyQueue->queueTask(cpuJob);
+            //update the job's time on CPU
+            cpuJob->job->timeRanFor += nextCpuTime - simRunTime;
+            //put next device on the CPU
+            QueueNode* ready = readyQueue->deQueueTask();
+            currentSystem->updateCurrentJob(ready);
+            //adjust the simRunTime
+            simRunTime = nextCpuTime;
+        }else{
+            //if the next line arrives before the next cpu event
+            //update the job's time on the CPU
+            currentSystem->getCurrentJob()->job->timeRanFor += nextCpuTime - simRunTime;
+            simRunTime = duration;
+        }
+    }
+}
+
+void checkHoldQueues(){
+    QueueNode* holder = holdQueueOne->head;
+    QueueNode* holder2 = holder;
+    if(holder != nullptr){
+        while(holder != nullptr && holder->job->memoryNeeded <= currentSystem->getAvailableMemory()){
+            //continues to repeat until either the end is reached, or the needed memory isn't available
+            holder2 = holder->next;
+            //moves to ready queue
+            readyQueue->queueTask(holder);
+            //allocates the cpu memory
+            currentSystem->setMemoryUsed(holder->job->memoryNeeded, false);
+            holder = holder2;
+        }
+    }
+    //only check holdQueueTwo if holdQueueOne is empty
+    if(holdQueueOne->head == nullptr){
+        holder = holdQueueTwo->head;
+        holder2 = holder;
+        while(holder != nullptr && holder->job->memoryNeeded <= currentSystem->getAvailableMemory()){
+            //continues to repeat until either the end is reached, or the needed memory isn't available
+            holder2 = holder->next;
+            //moves to ready queue
+            readyQueue->queueTask(holder);
+            //allocates the cpu memory
+            currentSystem->setMemoryUsed(holder->job->memoryNeeded, false);
+            holder = holder2;
+        }
+    }
+}
+
+bool addNewToCPU(){
+    //adds a new process from the ready queue to the cpu
+    QueueNode* toAdd = nullptr;
+    int memoryReq = 0;
+    int devicesReq = 0;
+    if(readyQueue->head != nullptr){
+        toAdd = readyQueue->deQueueTask();
+    }
+    currentSystem->updateCurrentJob(toAdd);
+    if(toAdd == nullptr){
+        return false;
+    }else{
+        return true;
+    }
 }
 
 void queryWaitQueue(){
