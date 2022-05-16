@@ -21,8 +21,8 @@ class CPU {
     int memoryUsed;
     /** Current number of devices being used */
     int devicesUsed;
-    /** The job that is currently running on the CPU */
-    Job *currentJob;
+    /** The QueueNode holding the Job that is currently running on the CPU */
+    QueueNode *currentJob;
 public:
     /**
      * Constructor: Creates a new CPU with a specified amount of main memory, devices, and a given quantum.
@@ -35,7 +35,7 @@ public:
      * Updates the currentJob field to contain the passed in job
      * @param newJob The job that will become the new currently running job
      */
-    void updateCurrentJob(Job *newJob);
+    void updateCurrentJob(QueueNode *newJob);
     int getAvailableMemory() const;
     int getAvailableDevices() const;
     void printCurrentJob();
@@ -59,7 +59,7 @@ public:
     Process *processArr;
 
     Process *returnProcess();
-    Job* getCurrentJob();
+    QueueNode* getCurrentJob();
     void bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueue* ready, WaitQueue* wait);
     void releaseDevice(QueueNode* freeNode, int devRelease, bool releaseAll);
 };
