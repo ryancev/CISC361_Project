@@ -99,6 +99,4 @@ HoldQueueTwo::~HoldQueueTwo(){
             holder = holder2;
         }
     }
-    delete head;
-    delete tail;
 }

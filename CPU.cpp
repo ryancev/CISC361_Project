@@ -61,7 +61,7 @@ void CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
     int available = getAvailableDevices();
     if(available >= devReq){
         HoldQueueTwo* deviceList = new HoldQueueTwo();
-        //gets all of the unique jobs currently holding resources
+        //gets all of the unique jobs currently holding resources, by pulling grom the process
         deviceList->addBank(testJob);
         for(int i=0; i < SERIAL_DEVICES; i++){
             if(processArr[i].isUsed){
