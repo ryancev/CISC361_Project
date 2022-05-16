@@ -52,7 +52,7 @@ void CPU::printCurrentJob() {
     cout << endl;
 }
 
-void CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueue* ready, WaitQueue* wait){
+bool CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueue* ready, WaitQueue* wait){
     /*
     takes the current active job in the CPU, and checks if it can safely receive the devices it has requested
     testNode is the Node holding the Job that is requesting the devices
@@ -84,6 +84,7 @@ void CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
             holder = holder->next;
         }
         //frees memory to prevent garbage
+        int deviceListSize = deviceList->length;
         delete deviceList;
         //the actual algorithm, checks if the state is safe.
         //once a process is known to be able to finish, its corresponding array value is set to -1
@@ -91,7 +92,7 @@ void CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
         bool modsMade = true;
         while(modsMade){
             modsMade = false;
-            for(int j=0; j<deviceList->length; j++){
+            for(int j=0; j<deviceListSize; j++){
                 if(simDeviceArray[j][0] != -1 && simDeviceArray[j][1]-simDeviceArray[j][0] <= available){
                     available += simDeviceArray[j][0];
                     simDeviceArray[j][0] = -1;
@@ -101,7 +102,7 @@ void CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
         }
         //checks to see if all of array are -1
         bool isSafe = true;
-        for(int i=0; i<deviceList->length; i++){
+        for(int i=0; i<deviceListSize; i++){
             if(simDeviceArray[i][0] != -1){
                 isSafe = false;
             }
@@ -127,7 +128,7 @@ void CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
                 QueueNode* removedJob = wait->deQueueBank(testJob);
                 ready->queueTask(removedJob);
             }
-            return;
+            return true;
         }
         //if not safe, goes to next part below
     }
@@ -139,6 +140,7 @@ void CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
         currentJob = nullptr;
     }
     //else, nothing is done about it
+    return false;
 }
 
 void CPU::releaseDevice(QueueNode* freeNode, int devRelease, bool releaseAll){

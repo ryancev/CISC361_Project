@@ -60,7 +60,7 @@ public:
 
     Process *returnProcess();
     QueueNode* getCurrentJob();
-    void bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueue* ready, WaitQueue* wait);
+    bool bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueue* ready, WaitQueue* wait);
     void releaseDevice(QueueNode* freeNode, int devRelease, bool releaseAll);
 };
 
