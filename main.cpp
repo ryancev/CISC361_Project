@@ -122,7 +122,9 @@ void processLine(const string& currentLine) {
     int arrivalTime = stoi(splitString[1]);
     int timeSinceLastEvent = arrivalTime - currentTime;
 
-    simulateInBetween(currentTime, timeSinceLastEvent);
+    if (currentSystem != nullptr) {
+        simulateInBetween(currentTime, timeSinceLastEvent);
+    }
 
     currentTime = arrivalTime;
     switch (splitString->at(0)) {
