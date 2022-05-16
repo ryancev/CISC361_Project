@@ -18,7 +18,7 @@ QueueNode *WaitQueue::deQueueBank(Job* newJob){
     //Special instance of dequeueing for banker algorithm applications
     //While device requests are checked in FIFO order, they may not be fulfillable in that order
     QueueNode* holder = head;
-    if(holder->job->jobNumber = newJob->jobNumber){
+    if(holder->job->jobNumber == newJob->jobNumber){
         head = holder->next;
     }else{
         while(holder->next->job->jobNumber != newJob->jobNumber){
