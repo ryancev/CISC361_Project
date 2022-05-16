@@ -203,6 +203,18 @@ static void makeLines() {
     cout << endl;
 }
 
+void queryWaitQueue(WaitQueue* wait, CPU* cpu, ReadyQueue* ready){
+    if(wait->length > 0){
+        QueueNode* holder = wait->head;
+        QueueNode* holder2 = holder;
+        while(holder != nullptr){
+            holder2 = holder2->next;
+            cpu->bankerAlg(holder, holder->job->lastDevicesRequest, true, ready, wait);
+            holder = holder2;
+        }
+    }
+}
+
 void printSystemInfo() {
     makeLines();
     cout << "At time: " << currentTime << endl;
