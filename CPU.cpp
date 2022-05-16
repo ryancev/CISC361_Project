@@ -12,6 +12,7 @@ CPU::CPU(int mainMemory, int serialDevices, int timeQuantum) {
     MAIN_MEMORY = mainMemory;
     SERIAL_DEVICES = serialDevices;
     TIME_QUANTUM = timeQuantum;
+    intoQuantum = 0;
     memoryUsed = 0;
     devicesUsed = 0;
     currentJob = nullptr;
@@ -26,8 +27,13 @@ int CPU::getTimeQuantum() const {
     return TIME_QUANTUM;
 }
 
+int CPU::getQuantumLeft() const {
+    return TIME_QUANTUM - intoQuantum;
+}
+
 void CPU::updateCurrentJob(QueueNode *newJob) {
     currentJob = newJob ;
+    intoQuantum = 0;
 }
 
 /**
@@ -151,6 +157,7 @@ bool CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
         testJob->lastDevicesRequest = devReq;
         wait->queueTask(testNode);
         currentJob = nullptr;
+        intoQuantum = 0;
     }
     //else, nothing is done about it
     return false;
@@ -158,8 +165,11 @@ bool CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
 
 void CPU::releaseDevice(QueueNode* freeNode, int devRelease, bool releaseAll){
     //Frees the specified number of devices
+    //releaseAll is only true for if the process is moving to the complete queue
     if(releaseAll){
         devRelease = freeNode->job->devicesHeld;
+        //releases the memory
+        setMemoryUsed(freeNode->job->memoryNeeded, true);
     }
     freeNode->job->devicesHeld -= devRelease;
     devicesUsed -= devRelease;

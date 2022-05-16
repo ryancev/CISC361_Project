@@ -9,6 +9,7 @@
 #include "Job.hpp"
 #include "ReadyQueue.hpp"
 #include "WaitQueue.hpp"
+#include "CompleteQueue.hpp"
 #include <vector>
 
 class CPU {
@@ -18,6 +19,8 @@ class CPU {
     int SERIAL_DEVICES;
     /** How long jobs are allowed to run for */
     int TIME_QUANTUM;
+    /** How far into the quantum we are */
+    int intoQuantum;
     /** Current amount of memory being used */
     int memoryUsed;
     /** Current number of devices being used */
@@ -42,6 +45,7 @@ public:
     void printCurrentJob();
 
     int getMainMemory() const;
+    int getQuantumLeft() const;
 
     /**
      *
