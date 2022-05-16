@@ -14,6 +14,7 @@ using namespace std;
 
 int countSpaces(const string& currentLine);
 void processLine(const string& currentLine);
+void queryWaitQueue(WaitQueue* wait, CPU* cpu, ReadyQueue* ready);
 void printSystemInfo();
 
 int currentTime = 0;
