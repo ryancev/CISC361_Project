@@ -15,11 +15,15 @@ CPU::CPU(int mainMemory, int serialDevices, int timeQuantum) {
     memoryUsed = 0;
     devicesUsed = 0;
     currentJob = nullptr;
-    processArr = new Process[serialDevices];
+    processArr = new vector<Process>(serialDevices);
     for (int i = 0; i < serialDevices; i++) {
-        processArr[i].isUsed = false;
-        processArr[i].jobUsing = nullptr;
+        processArr->at(i).isUsed = false;
+        processArr->at(i).jobUsing = nullptr;
     }
+}
+
+int CPU::getTimeQuantum() const {
+    return TIME_QUANTUM;
 }
 
 void CPU::updateCurrentJob(QueueNode *newJob) {
@@ -76,8 +80,8 @@ bool CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
         //gets all of the unique jobs currently holding resources, by pulling from the process
         deviceList->addBank(testJob);
         for(int i=0; i < SERIAL_DEVICES; i++){
-            if(processArr[i].isUsed){
-                deviceList->addBank(processArr[i].jobUsing);
+            if(processArr->at(i).isUsed){
+                deviceList->addBank(processArr->at(i).jobUsing);
             }
         }
 
@@ -124,9 +128,9 @@ bool CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
             int dedicate = 0;
             int processIterator = 0;
             while(dedicate < devReq){
-                if(!processArr[processIterator].isUsed){
-                    processArr[processIterator].isUsed = true;
-                    processArr[processIterator].jobUsing = testJob;
+                if(!processArr->at(processIterator).isUsed){
+                    processArr->at(processIterator).isUsed = true;
+                    processArr->at(processIterator).jobUsing = testJob;
                     dedicate++;
                 }
                 processIterator++;
@@ -162,9 +166,9 @@ void CPU::releaseDevice(QueueNode* freeNode, int devRelease, bool releaseAll){
     int numFreed = 0;
     int processIterator = 0;
     while(numFreed <= devRelease){
-        if(processArr[processIterator].isUsed && processArr[processIterator].jobUsing->jobNumber == freeNode->job->jobNumber){
-            processArr[processIterator].isUsed = false;
-            processArr[processIterator].jobUsing = nullptr;
+        if(processArr->at(processIterator).isUsed && processArr->at(processIterator).jobUsing->jobNumber == freeNode->job->jobNumber){
+            processArr->at(processIterator).isUsed = false;
+            processArr->at(processIterator).jobUsing = nullptr;
             numFreed +=1;
         }
         processIterator += 1;

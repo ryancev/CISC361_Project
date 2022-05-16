@@ -9,6 +9,7 @@
 #include "Job.hpp"
 #include "ReadyQueue.hpp"
 #include "WaitQueue.hpp"
+#include <vector>
 
 class CPU {
     /** Max allocatable memory for this system */
@@ -56,12 +57,15 @@ public:
         Job *jobUsing;
     };
     /** Array containing the processes for the system*/
-    Process *processArr;
+    std::vector<Process> *processArr;
+
 
     Process *returnProcess();
     QueueNode* getCurrentJob();
     bool bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueue* ready, WaitQueue* wait);
     void releaseDevice(QueueNode* freeNode, int devRelease, bool releaseAll);
+
+    int getTimeQuantum() const;
 };
 
 
