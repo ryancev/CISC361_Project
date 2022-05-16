@@ -17,6 +17,8 @@ void processLine(const string& currentLine);
 void printSystemInfo();
 
 int currentTime = 0;
+int iterationsCompleted, quantumRemainder;
+
 
 /** Current system configuration **/
 CPU *currentSystem;
@@ -144,6 +146,12 @@ void processLine(const string& currentLine) {
                 Job *newJob = new Job(arrivalTime, jobNumber, memoryRequired, maxDevices, runTime, priorityNumber);
                 QueueNode *queueNode = new QueueNode(newJob);
                 currentSystem->setMemoryUsed(memoryRequired, false);
+
+                // dont know when to actually begin moving tasks from queue to cpu
+                if (readyQueue->length == 0) {
+                    currentSystem->updateCurrentJob(queueNode);
+                    break;
+                }
                 readyQueue->queueTask(queueNode);
             }
             else if (currentSystem->getMainMemory() <= memoryRequired && currentSystem->getAvailableMemory() < memoryRequired) {
@@ -164,12 +172,19 @@ void processLine(const string& currentLine) {
             // Process device request
             int jobNumber = stoi(splitString[2]);
             int devicesRequested = stoi(splitString[3]);
+            // use bankers algo to check if request can be satisfied, move to ready queue if yes, wait queue if no
+            if (currentSystem->bankerAlg(currentSystem->getCurrentJob(), devicesRequested, false, readyQueue, waitQueue)) {
+                readyQueue->queueTask(currentSystem->getCurrentJob());
+            } else {
+                waitQueue->queueTask(currentSystem->getCurrentJob());
+            }
             break;
         }
         case 'L': {
             // Process device release request
             int jobNumber = stoi(splitString[2]);
             int devicesReleased = stoi(splitString[3]);
+            currentSystem->releaseDevice(currentSystem->getCurrentJob(), devicesReleased, false);
             break;
         }
         case 'D': {

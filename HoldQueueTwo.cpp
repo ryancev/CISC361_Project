@@ -40,7 +40,7 @@ void HoldQueueTwo::addBank(Job* newJob){
     //adds only unique instances of jobs to the SLL
     QueueNode* holder = head;
     if(holder == nullptr){
-        QueueNode* add = new QueueNode(holder->job);
+        QueueNode* add = new QueueNode(newJob);
         head = add;
         tail = add;
         length++;
