@@ -22,7 +22,7 @@ CPU::CPU(int mainMemory, int serialDevices, int timeQuantum) {
     }
 }
 
-void CPU::updateCurrentJob(Job *newJob) {
+void CPU::updateCurrentJob(QueueNode *newJob) {
     currentJob = newJob ;
 }
 
@@ -42,11 +42,11 @@ void CPU::printCurrentJob() {
     cout << "Job ID    Time Accrued    Time Left" << endl;
     cout << "===================================" << endl;
     if (currentJob != nullptr) {
-        cout << "   " << currentJob->jobNumber;
+        cout << "   " << currentJob->job->jobNumber;
         cout << "           ";
-        cout << currentJob->timeRanFor;
+        cout << currentJob->job->timeRanFor;
         cout << "            ";
-        cout << currentJob->getRemainingTime();
+        cout << currentJob->job->getRemainingTime();
         cout << endl;
     }
     cout << endl;
@@ -167,4 +167,8 @@ void CPU::setMemoryUsed(int jobsMaxMemory, bool isFreed) {
 
 int CPU::getMainMemory() const {
     return MAIN_MEMORY;
+}
+
+QueueNode *CPU::getCurrentJob(){
+    return currentJob;
 }
