@@ -53,15 +53,18 @@ void CPU::printCurrentJob() {
 }
 
 void CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueue* ready, WaitQueue* wait){
-    //takes the current active job in the CPU, and checks if it can safely receive the devices it has requested
-    //testNode is the Node holding the Job that is requesting the devices
-    //inWaitQueue handles the case of whether or not this call is being made from the CPU or the WaitQueue
-    //devReq is the number of devices being requested by testJob
+    /*
+    takes the current active job in the CPU, and checks if it can safely receive the devices it has requested
+    testNode is the Node holding the Job that is requesting the devices
+    inWaitQueue handles the case of whether or not this call is being made from the CPU or the WaitQueue
+
+    devReq is the number of devices being requested by testJob
+    */
     Job* testJob = testNode->job;
     int available = getAvailableDevices();
     if(available >= devReq){
         HoldQueueTwo* deviceList = new HoldQueueTwo();
-        //gets all of the unique jobs currently holding resources, by pulling grom the process
+        //gets all of the unique jobs currently holding resources, by pulling from the process
         deviceList->addBank(testJob);
         for(int i=0; i < SERIAL_DEVICES; i++){
             if(processArr[i].isUsed){
@@ -133,6 +136,7 @@ void CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
         //If it was in the CPU and failed, then it moves to the wait queue
         testJob->lastDevicesRequest = devReq;
         wait->queueTask(testNode);
+        currentJob = nullptr;
     }
     //else, nothing is done about it
 }
