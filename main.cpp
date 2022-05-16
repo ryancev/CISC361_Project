@@ -14,7 +14,7 @@ using namespace std;
 
 int countSpaces(const string& currentLine);
 void processLine(const string& currentLine);
-void queryWaitQueue(WaitQueue* wait, CPU* cpu, ReadyQueue* ready);
+void queryWaitQueue();
 void printSystemInfo();
 
 int currentTime = 0;
@@ -204,13 +204,13 @@ static void makeLines() {
     cout << endl;
 }
 
-void queryWaitQueue(WaitQueue* wait, CPU* cpu, ReadyQueue* ready){
-    if(wait->length > 0){
-        QueueNode* holder = wait->head;
+void queryWaitQueue(){
+    if(waitQueue->length > 0){
+        QueueNode* holder = waitQueue->head;
         QueueNode* holder2 = holder;
         while(holder != nullptr){
             holder2 = holder2->next;
-            cpu->bankerAlg(holder, holder->job->lastDevicesRequest, true, ready, wait);
+            currentSystem->bankerAlg(holder, holder->job->lastDevicesRequest, true, readyQueue, waitQueue);
             holder = holder2;
         }
     }
