@@ -10,6 +10,7 @@
 class WaitQueue : public HoldQueueTwo {
 public:
     WaitQueue();
+    QueueNode* deQueueBank(Job* newJob);
     void printHoldQueue() override;
 };
 

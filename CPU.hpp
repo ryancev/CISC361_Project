@@ -7,6 +7,8 @@
 
 
 #include "Job.hpp"
+#include "ReadyQueue.hpp"
+#include "WaitQueue.hpp"
 
 class CPU {
     /** Max allocatable memory for this system */
@@ -58,7 +60,7 @@ public:
 
     Process *returnProcess();
     Job* getCurrentJob();
-    void bankerAlg(Job* testJob, int devReq);
+    void bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueue* ready, WaitQueue* wait);
 };
 
 

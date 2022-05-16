@@ -52,10 +52,11 @@ void CPU::printCurrentJob() {
     cout << endl;
 }
 
-void CPU::bankerAlg(Job* testJob, int devReq){
+void CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueue* ready, WaitQueue* wait){
     //takes the current active job in the CPU, and checks if it can safely receive the devices it has requested
     //testJob is the job requesting the devices
     //devReq is the number of devices being requested by testJob
+    Job* testJob = testNode->job;
     int available = getAvailableDevices();
     if(available >= devReq){
         HoldQueueTwo* deviceList = new HoldQueueTwo();
@@ -116,13 +117,25 @@ void CPU::bankerAlg(Job* testJob, int devReq){
                 }
                 processIterator++;
             }
-        }else{
-            //what to do if it's not safe???
+            if(inWaitQueue){
+                //Moves to the ready queue now that the request is filled
+                testJob->lastDevicesRequest = 0;
+                QueueNode* removedJob = wait->deQueueBank(testJob);
+                ready->queueTask(removedJob);
+            }
+            return;
         }
-    }else{
-        //what to do if not enough resources exist to begin with???
+        //if not safe, goes to next part below
     }
+    //What to do if not enough resources exist for the request
+    if(!inWaitQueue){
+        //If it was in the CPU and failed, then it moves to the wait queue
+        testJob->lastDevicesRequest = devReq;
+        wait->queueTask(testNode);
+    }
+    //else, nothing is done about it
 }
+
 void CPU::setMemoryUsed(int jobsMaxMemory, bool isFreed) {
     if (!isFreed) {
         CPU::memoryUsed += jobsMaxMemory;

@@ -37,6 +37,8 @@ public:
     int timeRanFor = 0;
     /** The current number of devices being held by this job */
     int devicesHeld = 0;
+    /**Exclusively for the wait queue, tells how many devices were last requested by this job*/
+    int lastDevicesRequest = 0;
     /** Getter: Returns the number of time spent running on the CPU*/
     int getTimeRanFor() const;
 
