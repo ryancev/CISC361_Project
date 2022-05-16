@@ -54,7 +54,8 @@ void CPU::printCurrentJob() {
 
 void CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueue* ready, WaitQueue* wait){
     //takes the current active job in the CPU, and checks if it can safely receive the devices it has requested
-    //testJob is the job requesting the devices
+    //testNode is the Node holding the Job that is requesting the devices
+    //inWaitQueue handles the case of whether or not this call is being made from the CPU or the WaitQueue
     //devReq is the number of devices being requested by testJob
     Job* testJob = testNode->job;
     int available = getAvailableDevices();
@@ -134,6 +135,25 @@ void CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
         wait->queueTask(testNode);
     }
     //else, nothing is done about it
+}
+
+void CPU::releaseDevice(QueueNode* freeNode, int devRelease, bool releaseAll){
+    //Frees the specified number of devices
+    if(releaseAll){
+        devRelease = freeNode->job->devicesHeld;
+    }
+    freeNode->job->devicesHeld -= devRelease;
+    devicesUsed -= devRelease;
+    int numFreed = 0;
+    int processIterator = 0;
+    while(numFreed <= devRelease){
+        if(processArr[processIterator].isUsed && processArr[processIterator].jobUsing->jobNumber == freeNode->job->jobNumber){
+            processArr[processIterator].isUsed = false;
+            processArr[processIterator].jobUsing = nullptr;
+            numFreed +=1;
+        }
+        processIterator += 1;
+    }
 }
 
 void CPU::setMemoryUsed(int jobsMaxMemory, bool isFreed) {
