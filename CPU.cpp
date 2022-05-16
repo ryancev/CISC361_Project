@@ -52,6 +52,15 @@ void CPU::printCurrentJob() {
     cout << endl;
 }
 
+/**
+ *
+ * @param testNode QueueNode - holding the the jobs being requested
+ * @param devReq int - Number of devices being requested by the job
+ * @param inWaitQueue bool - True if device is in wait queue, false if the device isn't in the wait queue
+ * @param ready - ReadyQueue - The system's Ready queue
+ * @param wait - WaitQueue - The system's Wait queue
+ * @return true if request was safe & devices were allocated, false if request wasn't safe
+ */
 bool CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueue* ready, WaitQueue* wait){
     /*
     takes the current active job in the CPU, and checks if it can safely receive the devices it has requested
