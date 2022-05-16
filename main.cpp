@@ -135,26 +135,28 @@ void processLine(const string& currentLine) {
 
             // If job requests more memory than system has total, ignore job request
             if (memoryRequired > currentSystem->getMainMemory()) {
+                // reject job, stop processing the line
                 return;
             }
             // If available memory is greater than or equal to memory needed for job, update systems total memory
             if (currentSystem->getAvailableMemory() >= memoryRequired) {
+                // create process for job, put process into ready queue
                 Job *newJob = new Job(arrivalTime, jobNumber, memoryRequired, maxDevices, runTime, priorityNumber);
                 QueueNode *queueNode = new QueueNode(newJob);
                 currentSystem->setMemoryUsed(memoryRequired, false);
-                // create process for job, put process into ready queue
                 readyQueue->queueTask(queueNode);
-                return;
             }
-            // If there is enough total memory, but not enough available memory, code below executes
-            Job *newJob = new Job(arrivalTime, jobNumber, memoryRequired, maxDevices, runTime, priorityNumber);
-            QueueNode *queueNode = new QueueNode(newJob);
-            if (priorityNumber == 1) {
-                // add to hold queue one when insert works
-            }
-            else {
-                // add to second hold queue
-                holdQueueTwo->queueTask(queueNode);
+            else if (currentSystem->getMainMemory() <= memoryRequired && currentSystem->getAvailableMemory() < memoryRequired) {
+                // If there is enough total memory, but not enough available memory, code below executes
+                Job *newJob = new Job(arrivalTime, jobNumber, memoryRequired, maxDevices, runTime, priorityNumber);
+                QueueNode *queueNode = new QueueNode(newJob);
+                if (priorityNumber == 1) {
+                    // add to hold queue one when insert works
+                    holdQueueOne->insertInOrder(queueNode);
+                } else {
+                    // add to second hold queue
+                    holdQueueTwo->queueTask(queueNode);
+                }
             }
             break;
         }
