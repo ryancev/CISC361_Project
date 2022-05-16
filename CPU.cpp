@@ -175,7 +175,7 @@ void CPU::releaseDevice(QueueNode* freeNode, int devRelease, bool releaseAll){
     devicesUsed -= devRelease;
     int numFreed = 0;
     int processIterator = 0;
-    while(numFreed <= devRelease){
+    while(numFreed < devRelease){
         if(processArr->at(processIterator).isUsed && processArr->at(processIterator).jobUsing->jobNumber == freeNode->job->jobNumber){
             processArr->at(processIterator).isUsed = false;
             processArr->at(processIterator).jobUsing = nullptr;
