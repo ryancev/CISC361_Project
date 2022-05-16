@@ -164,6 +164,7 @@ void processLine(const string& currentLine) {
             // Process device request
             int jobNumber = stoi(splitString[2]);
             int devicesRequested = stoi(splitString[3]);
+            // use bankers algo to check if request can be satisfied
             break;
         }
         case 'L': {
