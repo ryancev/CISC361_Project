@@ -4,6 +4,7 @@
 
 #include "CompleteQueue.hpp"
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -49,8 +50,8 @@ void CompleteQueue::printHoldQueue() {
 }
 
 int CompleteQueue::calculateAvgTurnaround() {
-    int sumTimes = 0;
-    int numJobs = 0;
+    float sumTimes = 0;
+    float numJobs = 0;
     QueueNode *iterationNode = head;
     while (iterationNode != nullptr) {
         sumTimes += iterationNode->job->getTurnAroundTime();
@@ -65,7 +66,7 @@ void CompleteQueue::printAvgTurnaround() {
     for (int i = 0; i < 33; i++) {
         cout << "-";
     } cout << endl;
-    cout << "Average System Turnaround Time: " << calculateAvgTurnaround() << endl;
+    cout << "Average System Turnaround Time: "<< setprecision(1) << calculateAvgTurnaround() << endl;
 }
 
 
