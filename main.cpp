@@ -127,6 +127,9 @@ void processLine(const string& currentLine) {
     }
 
     currentTime = arrivalTime;
+    if (currentSystem != nullptr) {
+        printSystemInfo();
+    }
     switch (splitString->at(0)) {
         case 'C': {
             // Set proper system configuration variables
@@ -157,7 +160,7 @@ void processLine(const string& currentLine) {
                 currentSystem->setMemoryUsed(memoryRequired, false);
 
                 // dont know when to actually begin moving tasks from queue to cpu
-                if (readyQueue->length == 0 && waitQueue->length == 0) {
+                if (readyQueue->length == 0 && waitQueue->length == 0 && currentSystem->getCurrentJob() == nullptr) {
                     currentSystem->updateCurrentJob(queueNode);
                     break;
                 }
