@@ -233,7 +233,7 @@ void simulateInBetween(int currentTime, int duration){
             //if the job completely finishes before the next line is called
             //Adds to complete queue, releases its devices (and memory), and updates its finish time
             QueueNode* cpuJob = currentSystem->getCurrentJob();
-            completeQueue->queueTask(cpuJob);
+            completeQueue->insertInOrder(cpuJob);
             currentSystem->releaseDevice(cpuJob, 0, true);
             cpuJob->job->finishTime = currentTime + jobFinishTime;
             //update the job's time on CPU
