@@ -31,6 +31,10 @@ int CPU::getQuantumLeft() const {
     return TIME_QUANTUM - intoQuantum;
 }
 
+void CPU::updateQuantum(int step){
+    intoQuantum += step;
+}
+
 void CPU::updateCurrentJob(QueueNode *newJob) {
     currentJob = newJob ;
     intoQuantum = 0;

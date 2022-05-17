@@ -251,7 +251,8 @@ void simulateInBetween(int currentTime, int duration){
         }else{
             //if the next line arrives before the next cpu event
             //update the job's time on the CPU
-            currentSystem->getCurrentJob()->job->timeRanFor += nextCpuTime - simRunTime;
+            currentSystem->getCurrentJob()->job->timeRanFor += duration - simRunTime;
+            currentSystem->updateQuantum(duration - simRunTime);
             simRunTime = duration;
         }
     }
