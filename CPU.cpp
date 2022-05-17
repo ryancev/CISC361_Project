@@ -141,7 +141,7 @@ bool CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
             devicesUsed += devReq;
             int dedicate = 0;
             int processIterator = 0;
-            while(dedicate < devReq && processIterator < processArr->size()){
+            while(dedicate < devReq && processIterator < SERIAL_DEVICES){
                 if(!processArr->at(processIterator).isUsed){
                     processArr->at(processIterator).isUsed = true;
                     processArr->at(processIterator).jobUsing = testJob;
@@ -186,7 +186,7 @@ void CPU::releaseDevice(QueueNode* freeNode, int devRelease, bool releaseAll){
     devicesUsed -= devRelease;
     int numFreed = 0;
     int processIterator = 0;
-    while(numFreed < devRelease && processIterator < processArr->size()){
+    while(numFreed < devRelease && processIterator < SERIAL_DEVICES){
         if(processArr->at(processIterator).isUsed){
             if(processArr->at(processIterator).jobUsing->jobNumber == freeNode->job->jobNumber){
                 processArr->at(processIterator).isUsed = false;
