@@ -38,7 +38,9 @@ void CPU::updateQuantum(int step){
 void CPU::updateCurrentJob(QueueNode *newJob) {
     currentJob = newJob ;
     intoQuantum = 0;
-    newJob->next = nullptr;
+    if(newJob != nullptr){
+        newJob->next = nullptr;
+    }
 }
 
 /**
