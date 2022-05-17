@@ -235,20 +235,19 @@ void simulateInBetween(int currentTime, int duration){
             //see if freed devices can be used, and put next device on the CPU if possible
             queryWaitQueue();
             checkHoldQueues();
-            QueueNode* ready = readyQueue->deQueueTask();
-            currentSystem->updateCurrentJob(ready);
+            //puts next device on the CPU
+            addNewToCPU();
             //adjust the simRunTime
             simRunTime = jobFinishTime;
         }else if(nextCpuTime < jobFinishTime && nextCpuTime <= duration){
             //if the quantum ends before the job is done
-            //adds the current job to the 
+            //adds the current job to the ready queue
             QueueNode* cpuJob = currentSystem->getCurrentJob();
             readyQueue->queueTask(cpuJob);
             //update the job's time on CPU
             cpuJob->job->timeRanFor += nextCpuTime - simRunTime;
             //put next device on the CPU
-            QueueNode* ready = readyQueue->deQueueTask();
-            currentSystem->updateCurrentJob(ready);
+            addNewToCPU();
             //adjust the simRunTime
             simRunTime = nextCpuTime;
         }else{
