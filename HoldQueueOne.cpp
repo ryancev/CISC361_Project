@@ -76,8 +76,10 @@ void HoldQueueOne::printHoldQueue() {
 
 QueueNode* HoldQueueOne::popTask(){
     QueueNode *holder = head;
-    head = holder->next;
-    length--;
+    if(head != nullptr){
+        head = holder->next;
+        length--;
+    }
     if(head == nullptr){
         tail = nullptr;
     }
