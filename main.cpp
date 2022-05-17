@@ -157,7 +157,7 @@ void processLine(const string& currentLine) {
                 currentSystem->setMemoryUsed(memoryRequired, false);
 
                 // dont know when to actually begin moving tasks from queue to cpu
-                if (readyQueue->length == 0) {
+                if (readyQueue->length == 0 && waitQueue->length == 0) {
                     currentSystem->updateCurrentJob(queueNode);
                     break;
                 }
@@ -184,8 +184,7 @@ void processLine(const string& currentLine) {
             // use bankers algo to check if request can be satisfied, move to ready queue if yes, wait queue if no
             if (currentSystem->bankerAlg(currentSystem->getCurrentJob(), devicesRequested, false, readyQueue, waitQueue)) {
                 readyQueue->queueTask(currentSystem->getCurrentJob());
-            } else {
-                waitQueue->queueTask(currentSystem->getCurrentJob());
+                currentSystem->updateCurrentJob(readyQueue->deQueueTask());
             }
             break;
         }
