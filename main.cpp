@@ -186,9 +186,11 @@ void processLine(const string& currentLine) {
             int jobNumber = stoi(splitString[2]);
             int devicesRequested = stoi(splitString[3]);
             // use bankers algo to check if request can be satisfied, move to ready queue if yes, wait queue if no
-            if (currentSystem->bankerAlg(currentSystem->getCurrentJob(), devicesRequested, false, readyQueue, waitQueue)) {
-                readyQueue->queueTask(currentSystem->getCurrentJob());
-                currentSystem->updateCurrentJob(readyQueue->deQueueTask());
+            if(currentSystem->getCurrentJob()->job->jobNumber == jobNumber){
+                if(currentSystem->bankerAlg(currentSystem->getCurrentJob(), devicesRequested, false, readyQueue, waitQueue)) {
+                    readyQueue->queueTask(currentSystem->getCurrentJob());
+                    currentSystem->updateCurrentJob(readyQueue->deQueueTask());
+                }
             }
             break;
         }
@@ -216,7 +218,6 @@ static void makeLines() {
 }
 
 void simulateInBetween(int currentTime, int duration){
-    cout << "Testing" << endl;
     int simRunTime = 0;
     int nextCpuTime = 0;
     int jobFinishTime = 0;
@@ -227,11 +228,11 @@ void simulateInBetween(int currentTime, int duration){
         }
         nextCpuTime = simRunTime + currentSystem->getQuantumLeft();
         jobFinishTime = simRunTime + currentSystem->getCurrentJob()->job->getRemainingTime();
-        if(jobFinishTime <= nextCpuTime && nextCpuTime <= duration){
+        if(jobFinishTime <= nextCpuTime && jobFinishTime <= duration){
             //if the job completely finishes before the next line is called
             //Adds to complete queue, releases its devices (and memory), and updates its finish time
             QueueNode* cpuJob = currentSystem->getCurrentJob();
-            completeQueue->queueTask(cpuJob);
+            completeQueue->insertInOrder(cpuJob);
             currentSystem->releaseDevice(cpuJob, 0, true);
             cpuJob->job->finishTime = currentTime + jobFinishTime;
             //update the job's time on CPU

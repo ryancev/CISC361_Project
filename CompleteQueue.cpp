@@ -4,6 +4,7 @@
 
 #include "CompleteQueue.hpp"
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -48,9 +49,9 @@ void CompleteQueue::printHoldQueue() {
     makeLines();
 }
 
-int CompleteQueue::calculateAvgTurnaround() {
-    int sumTimes = 0;
-    int numJobs = 0;
+double CompleteQueue::calculateAvgTurnaround() {
+    double sumTimes = 0.0;
+    double numJobs = 0.0;
     QueueNode *iterationNode = head;
     while (iterationNode != nullptr) {
         sumTimes += iterationNode->job->getTurnAroundTime();
@@ -65,7 +66,13 @@ void CompleteQueue::printAvgTurnaround() {
     for (int i = 0; i < 33; i++) {
         cout << "-";
     } cout << endl;
-    cout << "Average System Turnaround Time: " << calculateAvgTurnaround() << endl;
+    int x = calculateAvgTurnaround()/1;
+    int length = 0;
+    while(x > 0){
+        x /= 10;
+        length++;
+    }
+    cout << "Average System Turnaround Time: "<< setprecision(length + 1) << calculateAvgTurnaround() << endl;
 }
 
 
@@ -75,12 +82,12 @@ void CompleteQueue::insertInOrder(QueueNode *nodeToInsert) {
         head = nodeToInsert;
         tail = nodeToInsert;
     } else {
-        if(nodeToInsert->job->runningTime < head->job->runningTime){
+        if(nodeToInsert->job->jobNumber < head->job->jobNumber){
             nodeToInsert->next = head;
             head = nodeToInsert;
         }
         else{
-            while(holder->next != nullptr &&  nodeToInsert->job->runningTime >= holder->next->job->runningTime){
+            while(holder->next != nullptr &&  nodeToInsert->job->jobNumber >= holder->next->job->jobNumber){
                 holder = holder->next;
             }
             if(holder->next != nullptr){
