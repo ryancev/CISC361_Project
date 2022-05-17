@@ -66,7 +66,13 @@ void CompleteQueue::printAvgTurnaround() {
     for (int i = 0; i < 33; i++) {
         cout << "-";
     } cout << endl;
-    cout << "Average System Turnaround Time: "<< setprecision(2) << calculateAvgTurnaround() << endl;
+    int x = calculateAvgTurnaround()/1;
+    int length = 0;
+    while(x > 0){
+        x /= 10;
+        length++;
+    }
+    cout << "Average System Turnaround Time: "<< setprecision(length + 1) << calculateAvgTurnaround() << endl;
 }
 
 
