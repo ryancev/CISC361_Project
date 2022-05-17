@@ -174,6 +174,9 @@ bool CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
 void CPU::releaseDevice(QueueNode* freeNode, int devRelease, bool releaseAll){
     //Frees the specified number of devices
     //releaseAll is only true for if the process is moving to the complete queue
+    if(freeNode == nullptr){
+        return;
+    }
     if(releaseAll){
         devRelease = freeNode->job->devicesHeld;
         //releases the memory
