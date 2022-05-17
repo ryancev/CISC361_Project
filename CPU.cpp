@@ -137,7 +137,7 @@ bool CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
             }
         }
         //conditional for if the allocation can legally be made
-        if(isSafe){
+        if(isSafe && (inWaitQueue || testNode == currentJob)){
             //makes the changes, sinc it's safe
             testJob->devicesHeld += devReq;
             devicesUsed += devReq;
@@ -156,6 +156,10 @@ bool CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
                 testJob->lastDevicesRequest = 0;
                 QueueNode* removedJob = wait->deQueueBank(testJob);
                 ready->queueTask(removedJob);
+            }else if(testNode == currentJob){
+                ready->queueTask(currentJob);
+                QueueNode* fromReady = ready->deQueueTask();
+                updateCurrentJob(fromReady);
             }
             return true;
         }

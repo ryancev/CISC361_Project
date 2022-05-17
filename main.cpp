@@ -186,10 +186,7 @@ void processLine(const string& currentLine) {
             int jobNumber = stoi(splitString[2]);
             int devicesRequested = stoi(splitString[3]);
             // use bankers algo to check if request can be satisfied, move to ready queue if yes, wait queue if no
-            if (currentSystem->bankerAlg(currentSystem->getCurrentJob(), devicesRequested, false, readyQueue, waitQueue)) {
-                readyQueue->queueTask(currentSystem->getCurrentJob());
-                currentSystem->updateCurrentJob(readyQueue->deQueueTask());
-            }
+            currentSystem->bankerAlg(currentSystem->getCurrentJob(), devicesRequested, false, readyQueue, waitQueue);
             break;
         }
         case 'L': {
