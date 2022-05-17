@@ -75,12 +75,12 @@ void CompleteQueue::insertInOrder(QueueNode *nodeToInsert) {
         head = nodeToInsert;
         tail = nodeToInsert;
     } else {
-        if(nodeToInsert->job->runningTime < head->job->runningTime){
+        if(nodeToInsert->job->jobNumber < head->job->jobNumber){
             nodeToInsert->next = head;
             head = nodeToInsert;
         }
         else{
-            while(holder->next != nullptr &&  nodeToInsert->job->runningTime >= holder->next->job->runningTime){
+            while(holder->next != nullptr &&  nodeToInsert->job->jobNumber >= holder->next->job->jobNumber){
                 holder = holder->next;
             }
             if(holder->next != nullptr){
