@@ -218,7 +218,6 @@ static void makeLines() {
 }
 
 void simulateInBetween(int currentTime, int duration){
-    cout << "Testing" << endl;
     int simRunTime = 0;
     int nextCpuTime = 0;
     int jobFinishTime = 0;
