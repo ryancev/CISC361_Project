@@ -46,6 +46,7 @@ public:
 
     int getMainMemory() const;
     int getQuantumLeft() const;
+    void updateQuantum(int step);
 
     /**
      *
