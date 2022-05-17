@@ -217,6 +217,10 @@ void simulateInBetween(int currentTime, int duration){
     int simRunTime = 0;
     int nextCpuTime = 0;
     int jobFinishTime = 0;
+    if(currentSystem->getCurrentJob() == nullptr && readyQueue->head != nullptr){
+        QueueNode* first = readyQueue->deQueueTask();
+        currentSystem->updateCurrentJob(first);
+    }
     while(simRunTime < duration && currentSystem->getCurrentJob() != nullptr){
         nextCpuTime = simRunTime + currentSystem->getQuantumLeft();
         jobFinishTime = simRunTime + currentSystem->getCurrentJob()->job->getRemainingTime();
