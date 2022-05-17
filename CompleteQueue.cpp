@@ -49,7 +49,7 @@ void CompleteQueue::printHoldQueue() {
     makeLines();
 }
 
-int CompleteQueue::calculateAvgTurnaround() {
+float CompleteQueue::calculateAvgTurnaround() {
     float sumTimes = 0;
     float numJobs = 0;
     QueueNode *iterationNode = head;
