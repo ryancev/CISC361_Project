@@ -14,6 +14,7 @@ public:
     void printHoldQueue() override;
     int calculateAvgTurnaround();
     void printAvgTurnaround();
+    void insertInOrder(QueueNode *nodeToInsert);
 };
 
 

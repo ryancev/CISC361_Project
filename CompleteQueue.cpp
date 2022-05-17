@@ -68,3 +68,32 @@ void CompleteQueue::printAvgTurnaround() {
     cout << "Average System Turnaround Time: " << calculateAvgTurnaround() << endl;
 }
 
+
+void CompleteQueue::insertInOrder(QueueNode *nodeToInsert) {
+    QueueNode *holder = head;
+    if (head == nullptr && tail == nullptr) {
+        head = nodeToInsert;
+        tail = nodeToInsert;
+    } else {
+        if(nodeToInsert->job->runningTime < head->job->runningTime){
+            nodeToInsert->next = head;
+            head = nodeToInsert;
+        }
+        else{
+            while(holder->next != nullptr &&  nodeToInsert->job->runningTime >= holder->next->job->runningTime){
+                holder = holder->next;
+            }
+            if(holder->next != nullptr){
+                nodeToInsert->next = holder->next;
+                holder->next = nodeToInsert;
+            }
+            else{
+                holder->next = nodeToInsert;
+                nodeToInsert->next = nullptr;
+                tail = nodeToInsert;
+            }
+        }
+    }
+    length++;
+}
+

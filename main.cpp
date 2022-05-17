@@ -122,14 +122,14 @@ void processLine(const string& currentLine) {
     int arrivalTime = stoi(splitString[1]);
     int timeSinceLastEvent = arrivalTime - currentTime;
 
-    if (currentSystem != nullptr && arrivalTime != 9999) {
+    if (currentSystem != nullptr) {
         simulateInBetween(currentTime, timeSinceLastEvent);
     }
 
     currentTime = arrivalTime;
-    if (currentSystem != nullptr) {
-        printSystemInfo();
-    }
+//    if (currentSystem != nullptr) {
+//        printSystemInfo();
+//    }
     switch (splitString->at(0)) {
         case 'C': {
             // Set proper system configuration variables
