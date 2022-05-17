@@ -49,9 +49,9 @@ void CompleteQueue::printHoldQueue() {
     makeLines();
 }
 
-float CompleteQueue::calculateAvgTurnaround() {
-    float sumTimes = 0;
-    float numJobs = 0;
+double CompleteQueue::calculateAvgTurnaround() {
+    double sumTimes = 0.0;
+    double numJobs = 0.0;
     QueueNode *iterationNode = head;
     while (iterationNode != nullptr) {
         sumTimes += iterationNode->job->getTurnAroundTime();
@@ -66,7 +66,7 @@ void CompleteQueue::printAvgTurnaround() {
     for (int i = 0; i < 33; i++) {
         cout << "-";
     } cout << endl;
-    cout << "Average System Turnaround Time: "<< setprecision(1) << calculateAvgTurnaround() << endl;
+    cout << "Average System Turnaround Time: "<< setprecision(2) << calculateAvgTurnaround() << endl;
 }
 
 

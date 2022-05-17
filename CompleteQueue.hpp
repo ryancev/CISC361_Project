@@ -12,7 +12,7 @@ class CompleteQueue : public HoldQueueTwo {
 public:
     CompleteQueue();
     void printHoldQueue() override;
-    float calculateAvgTurnaround();
+    double calculateAvgTurnaround();
     void printAvgTurnaround();
     void insertInOrder(QueueNode *nodeToInsert);
 };
