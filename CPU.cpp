@@ -180,10 +180,12 @@ void CPU::releaseDevice(QueueNode* freeNode, int devRelease, bool releaseAll){
     int numFreed = 0;
     int processIterator = 0;
     while(numFreed < devRelease){
-        if(processArr->at(processIterator).isUsed && processArr->at(processIterator).jobUsing->jobNumber == freeNode->job->jobNumber){
-            processArr->at(processIterator).isUsed = false;
-            processArr->at(processIterator).jobUsing = nullptr;
-            numFreed +=1;
+        if(processArr->at(processIterator).isUsed){
+            if(processArr->at(processIterator).jobUsing->jobNumber == freeNode->job->jobNumber){
+                processArr->at(processIterator).isUsed = false;
+                processArr->at(processIterator).jobUsing = nullptr;
+                numFreed +=1;
+            }
         }
         processIterator += 1;
     }
