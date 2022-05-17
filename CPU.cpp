@@ -137,7 +137,7 @@ bool CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
             }
         }
         //conditional for if the allocation can legally be made
-        if(isSafe && (inWaitQueue || testNode == currentJob)){
+        if(isSafe){
             //makes the changes, sinc it's safe
             testJob->devicesHeld += devReq;
             devicesUsed += devReq;
@@ -162,7 +162,7 @@ bool CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
         //if not safe, goes to next part below
     }
     //What to do if not enough resources exist for the request
-    if(!inWaitQueue && testNode == currentJob){
+    if(!inWaitQueue){
         //If it was in the CPU and failed, then it moves to the wait queue
         testJob->lastDevicesRequest = devReq;
         wait->queueTask(testNode);
