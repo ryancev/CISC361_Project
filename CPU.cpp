@@ -84,6 +84,9 @@ bool CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
 
     devReq is the number of devices being requested by testJob
     */
+    if(testNode == nullptr && inWaitQueue == false){
+        return false;
+    }
     Job* testJob = testNode->job;
     int available = getAvailableDevices();
     if(available >= devReq){

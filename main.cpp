@@ -218,7 +218,10 @@ void simulateInBetween(int currentTime, int duration){
     int nextCpuTime = 0;
     int jobFinishTime = 0;
     while(simRunTime < duration && currentSystem->getCurrentJob() != nullptr){
-        addNewToCPU();
+        if(currentSystem->getCurrentJob() == nullptr && readyQueue->head != nullptr){
+            QueueNode* first = readyQueue->deQueueTask();
+            currentSystem->updateCurrentJob(first);
+        }
         nextCpuTime = simRunTime + currentSystem->getQuantumLeft();
         jobFinishTime = simRunTime + currentSystem->getCurrentJob()->job->getRemainingTime();
         if(jobFinishTime <= nextCpuTime && nextCpuTime <= duration){
@@ -233,8 +236,8 @@ void simulateInBetween(int currentTime, int duration){
             //see if freed devices can be used, and put next device on the CPU if possible
             queryWaitQueue();
             checkHoldQueues();
-            //puts next device on the CPU
-            addNewToCPU();
+            QueueNode* ready = readyQueue->deQueueTask();
+            currentSystem->updateCurrentJob(ready);
             //adjust the simRunTime
             simRunTime = jobFinishTime;
         }else if(nextCpuTime < jobFinishTime && nextCpuTime <= duration){
@@ -245,7 +248,8 @@ void simulateInBetween(int currentTime, int duration){
             //update the job's time on CPU
             cpuJob->job->timeRanFor += nextCpuTime - simRunTime;
             //put next device on the CPU
-            addNewToCPU();
+            QueueNode* ready = readyQueue->deQueueTask();
+            currentSystem->updateCurrentJob(ready);
             //adjust the simRunTime
             simRunTime = nextCpuTime;
         }else{
@@ -256,7 +260,10 @@ void simulateInBetween(int currentTime, int duration){
             simRunTime = duration;
         }
     }
-    addNewToCPU();
+    if(currentSystem->getCurrentJob() == nullptr && readyQueue->head != nullptr){
+        QueueNode* first = readyQueue->deQueueTask();
+        currentSystem->updateCurrentJob(first);
+    }
 }
 
 void checkHoldQueues(){
