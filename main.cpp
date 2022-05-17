@@ -261,6 +261,10 @@ void simulateInBetween(int currentTime, int duration){
             currentSystem->updateQuantum(duration - simRunTime);
             simRunTime = duration;
         }
+        if(currentSystem->getCurrentJob() == nullptr && readyQueue->head != nullptr){
+            QueueNode* first = readyQueue->deQueueTask();
+            currentSystem->updateCurrentJob(first);
+        }
     }
     if(currentSystem->getCurrentJob() == nullptr && readyQueue->head != nullptr){
         QueueNode* first = readyQueue->deQueueTask();
