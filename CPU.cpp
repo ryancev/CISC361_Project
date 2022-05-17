@@ -162,7 +162,7 @@ bool CPU::bankerAlg(QueueNode* testNode, int devReq, bool inWaitQueue, ReadyQueu
         //if not safe, goes to next part below
     }
     //What to do if not enough resources exist for the request
-    if(!inWaitQueue){
+    if(!inWaitQueue && testNode == currentJob){
         //If it was in the CPU and failed, then it moves to the wait queue
         testJob->lastDevicesRequest = devReq;
         wait->queueTask(testNode);
