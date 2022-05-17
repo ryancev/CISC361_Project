@@ -227,7 +227,7 @@ void simulateInBetween(int currentTime, int duration){
         }
         nextCpuTime = simRunTime + currentSystem->getQuantumLeft();
         jobFinishTime = simRunTime + currentSystem->getCurrentJob()->job->getRemainingTime();
-        if(jobFinishTime <= nextCpuTime && nextCpuTime <= duration){
+        if(jobFinishTime <= nextCpuTime && jobFinishTime <= duration){
             //if the job completely finishes before the next line is called
             //Adds to complete queue, releases its devices (and memory), and updates its finish time
             QueueNode* cpuJob = currentSystem->getCurrentJob();
