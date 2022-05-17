@@ -31,6 +31,7 @@ void HoldQueueTwo::queueTask(QueueNode *nodeToInsert) {
         tail->next = nodeToInsert;
         tail = nodeToInsert;
     }
+    tail->next = nullptr;
     length++;
 }
 
